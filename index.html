@@ -200,6 +200,44 @@ h1{font-size:17px;font-weight:600;color:#fff}
 .lineup-alert.show{display:flex}
 .lineup-alert-close{background:rgba(255,255,255,0.25);border:none;color:#fff;border-radius:6px;width:28px;height:28px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:inherit}
 
+/* History page */
+.history-page{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:300;flex-direction:column;background:var(--bg-page)}
+.history-page.open{display:flex}
+.history-topbar{background:var(--topbar-bg);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.history-topbar h2{color:#fff;font-size:16px;font-weight:600;margin:0}
+.history-close{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.history-body{flex:1;overflow-y:auto;padding:12px}
+.history-empty{text-align:center;color:var(--text-muted);font-size:14px;margin-top:60px}
+.match-card{background:var(--bg-card);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px var(--shadow-card)}
+.match-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.match-card-title{font-size:15px;font-weight:700;color:var(--text-primary)}
+.match-card-score{font-size:18px;font-weight:700;color:var(--green-text)}
+.match-card-meta{font-size:11px;color:var(--text-secondary);margin-bottom:10px}
+.match-card-btns{display:flex;gap:6px;flex-wrap:wrap}
+.match-card-btn{flex:1;min-width:60px;padding:7px 8px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.match-card-btn:active{opacity:0.7}
+.mcb-view{background:var(--green-light);color:var(--green-text)}
+.mcb-pdf{background:#E1F5EE;color:#0F6E56}
+.mcb-csv{background:#E8F0FE;color:#185FA5}
+.mcb-del{background:#FFE8E8;color:#C0392B}
+
+/* Match detail view (inside history page) */
+.match-detail{display:none;flex-direction:column;height:100%}
+.match-detail.open{display:flex}
+.detail-topbar{background:var(--topbar-bg);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.detail-back{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.detail-title{color:#fff;font-size:14px;font-weight:600;flex:1}
+.detail-body{flex:1;overflow-y:auto;padding:12px}
+.detail-stat-row{display:flex;gap:8px;margin-bottom:12px}
+.detail-stat{flex:1;background:var(--bg-card);border-radius:8px;padding:8px 10px;text-align:center}
+.detail-stat-val{font-size:18px;font-weight:700;color:var(--green-text)}
+.detail-stat-lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em}
+.detail-player-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-card);border-radius:8px;margin-bottom:6px}
+.detail-player-num{width:26px;height:26px;border-radius:50%;background:var(--green-light);color:var(--green-text);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.detail-player-name{flex:1;font-size:13px;font-weight:600;color:var(--text-primary)}
+.detail-player-mins{font-size:13px;font-weight:700;color:var(--green-text);flex-shrink:0}
+.detail-player-flags{font-size:10px;color:var(--text-secondary);flex-shrink:0}
+
 /* Dark mode toggle button */
 .dark-toggle{width:32px;height:32px;border:none;border-radius:8px;background:rgba(255,255,255,0.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;padding:0;margin-left:6px;flex-shrink:0}
 .dark-toggle:active{background:rgba(255,255,255,0.3)}
@@ -240,7 +278,9 @@ h1{font-size:17px;font-weight:600;color:#fff}
     <h1>Sub Tracker</h1>
     <button class="dark-toggle" id="dark-toggle" title="Toggle dark mode">☀️</button>
   </div>
-  <div class="score-wrap">
+  <div style="display:flex;align-items:center;gap:6px">
+    <button class="score-btn" id="btn-history" title="Match history" style="width:auto;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:0.03em;border-radius:6px">&#128196; History</button>
+    <div class="score-wrap">
     <div>
       <div class="score-display">
         <div>
@@ -258,6 +298,7 @@ h1{font-size:17px;font-weight:600;color:#fff}
       <button class="score-btn" id="opp-plus" title="Opposition goal">+</button>
       <button class="score-btn" id="opp-minus" title="Remove opposition goal" style="font-size:13px">−</button>
     </div>
+  </div>
   </div>
 </div>
 
@@ -335,10 +376,30 @@ h1{font-size:17px;font-weight:600;color:#fff}
     <button class="btn btn-gray btn-wide" id="btn-load-lineup" style="flex:1">&#8617; Load lineup</button>
     <button class="btn btn-red btn-wide" id="btn-clear-lineup" style="flex:1;padding:12px 6px;font-size:12px">&#x2715; Clear saved</button>
   </div>
+  <button class="btn btn-wide" id="btn-save-match" style="background:linear-gradient(135deg,#185FA5,#2d7fd4);color:#fff;font-size:14px;display:none">&#128190; Save Match Result</button>
   <button class="btn btn-blue btn-wide" id="btn-export">View / Copy match data</button>
   <button class="btn btn-green btn-wide" id="btn-csv">Download CSV</button>
   <button class="btn btn-orange btn-wide" id="btn-email">Send via Email</button>
   <button class="btn btn-wide" id="btn-pdf" style="background:linear-gradient(135deg,#0F6E56,#1D9E75);color:#fff;font-size:15px;letter-spacing:0.02em">&#x2913; Export Match Report PDF</button>
+</div>
+
+<!-- History page -->
+<div class="history-page" id="history-page">
+  <div class="history-topbar">
+    <h2>&#128196; Match History</h2>
+    <button class="history-close" id="history-close">&#x2715; Close</button>
+  </div>
+  <div class="history-body" id="history-body">
+    <!-- match list or detail view rendered here -->
+    <div id="history-list"></div>
+    <div class="match-detail" id="match-detail">
+      <div class="detail-topbar">
+        <button class="detail-back" id="detail-back">&#8592; Back</button>
+        <div class="detail-title" id="detail-title"></div>
+      </div>
+      <div class="detail-body" id="detail-body"></div>
+    </div>
+  </div>
 </div>
 
 <!-- Formation / pitch view -->
@@ -531,6 +592,7 @@ function endMatch() {
   el('ended-banner').className = 'ended-banner show';
   el('end-btn').disabled = true;
   el('end-btn').style.opacity = '0.4';
+  el('btn-save-match').style.display = '';
   closeModal('end-modal');
   saveState();
   renderPlayers();
@@ -551,6 +613,7 @@ function resetMatch() {
   el('status-dot').className = 'status-dot';
   el('end-btn').disabled = false;
   el('end-btn').style.opacity = '';
+  el('btn-save-match').style.display = 'none';
   initPlayers(true);
   applyLineupIfFresh();
   setHalf(1, '1st Half');
@@ -1730,6 +1793,194 @@ function restoreState() {
   } catch(e) { return false; }
 }
 
+// ── Match History ─────────────────────────────────────────────────────────────
+var HISTORY_KEY = 'subtracker_history';
+
+function getHistory() {
+  try {
+    var raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function saveHistory(history) {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch(e) {}
+}
+
+function saveMatchResult() {
+  var m = getMatchMeta();
+  if (!m.opp || m.opp === 'Unknown') {
+    if (!confirm('No opponent name entered. Save anyway?')) return;
+  }
+  var history = getHistory();
+  var id = Date.now();
+  var now = new Date();
+  var snap = {
+    id: id,
+    gw: m.gw,
+    opp: m.opp,
+    scoreUs: scoreUs,
+    scoreThem: scoreThem,
+    date: now.toLocaleDateString('en-AU', { day:'2-digit', month:'short', year:'numeric' }),
+    halfMins: halfMins,
+    gameStyle: gameStyle,
+    totalTime: getSeconds(),
+    matchEnded: matchEnded,
+    players: players.map(function(p) {
+      return {
+        number: p.number,
+        name: p.name,
+        stints: p.stints.slice(),
+        onAt: p.onAt,
+        goals: p.goals,
+        assists: p.assists,
+        injured: p.injured,
+        injuredAt: p.injuredAt,
+        cards: p.cards.slice(),
+        dnp: p.dnp
+      };
+    })
+  };
+  history.unshift(snap); // newest first
+  saveHistory(history);
+  vibe(50);
+  alert('Match saved: GW' + m.gw + ' vs ' + m.opp);
+}
+
+function deleteMatch(id) {
+  if (!confirm('Delete this match? This cannot be undone.')) return;
+  var history = getHistory().filter(function(m) { return m.id !== id; });
+  saveHistory(history);
+  renderHistoryList();
+}
+
+function calcMatchMins(p, totalSecs) {
+  var t = p.stints.reduce(function(s, st) { return s + (st.off - st.on); }, 0);
+  if (p.onAt !== null) t += Math.floor(totalSecs / 60) - p.onAt;
+  return t;
+}
+
+function openHistory() {
+  el('history-page').classList.add('open');
+  el('match-detail').classList.remove('open');
+  el('history-list').style.display = '';
+  renderHistoryList();
+}
+
+function closeHistory() {
+  el('history-page').classList.remove('open');
+}
+
+function renderHistoryList() {
+  el('match-detail').classList.remove('open');
+  el('history-list').style.display = '';
+  var list = el('history-list');
+  var history = getHistory();
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">No saved matches yet.<br><br>End a match and tap<br>"Save Match Result" to save it here.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  history.forEach(function(m) {
+    var card = document.createElement('div');
+    card.className = 'match-card';
+    card.innerHTML =
+      '<div class="match-card-header">' +
+        '<div class="match-card-title">GW' + m.gw + ' vs ' + m.opp + '</div>' +
+        '<div class="match-card-score">' + m.scoreUs + ' \u2013 ' + m.scoreThem + '</div>' +
+      '</div>' +
+      '<div class="match-card-meta">' + m.date + '  \u2022  ' + m.gameStyle + '-a-side  \u2022  ' + fmtTime(m.totalTime) + ' played' + (m.matchEnded ? '  \u2022  Ended early' : '') + '</div>' +
+      '<div class="match-card-btns">' +
+        '<button class="match-card-btn mcb-view" data-id="' + m.id + '">&#128065; View</button>' +
+        '<button class="match-card-btn mcb-pdf"  data-id="' + m.id + '">&#x2913; PDF</button>' +
+        '<button class="match-card-btn mcb-csv"  data-id="' + m.id + '">CSV</button>' +
+        '<button class="match-card-btn mcb-del"  data-id="' + m.id + '">&#x2715; Delete</button>' +
+      '</div>';
+    card.querySelector('.mcb-view').addEventListener('click', function() { openMatchDetail(parseInt(this.dataset.id)); });
+    card.querySelector('.mcb-pdf').addEventListener('click',  function() { exportMatchPDF(parseInt(this.dataset.id)); });
+    card.querySelector('.mcb-csv').addEventListener('click',  function() { exportMatchCSV(parseInt(this.dataset.id)); });
+    card.querySelector('.mcb-del').addEventListener('click',  function() { deleteMatch(parseInt(this.dataset.id)); });
+    list.appendChild(card);
+  });
+}
+
+function openMatchDetail(id) {
+  var m = getHistory().find(function(x) { return x.id === id; });
+  if (!m) return;
+  el('history-list').style.display = 'none';
+  el('match-detail').classList.add('open');
+  el('detail-title').textContent = 'GW' + m.gw + ' vs ' + m.opp;
+
+  var body = el('detail-body');
+  var totGoals   = m.players.reduce(function(s,p){return s+(p.goals||0);},0);
+  var totAssists = m.players.reduce(function(s,p){return s+(p.assists||0);},0);
+  var totMins    = m.players.reduce(function(s,p){return s+calcMatchMins(p,m.totalTime);},0);
+
+  var html =
+    '<div class="detail-stat-row">' +
+      '<div class="detail-stat"><div class="detail-stat-val">' + m.scoreUs + '\u2013' + m.scoreThem + '</div><div class="detail-stat-lbl">Score</div></div>' +
+      '<div class="detail-stat"><div class="detail-stat-val">' + totGoals + '</div><div class="detail-stat-lbl">Goals</div></div>' +
+      '<div class="detail-stat"><div class="detail-stat-val">' + totAssists + '</div><div class="detail-stat-lbl">Assists</div></div>' +
+      '<div class="detail-stat"><div class="detail-stat-val">' + fmtTime(m.totalTime) + '</div><div class="detail-stat-lbl">Time</div></div>' +
+    '</div>';
+
+  // Sort players: featured first, bench last
+  var sorted = m.players.slice().sort(function(a, b) {
+    var am = calcMatchMins(a, m.totalTime), bm = calcMatchMins(b, m.totalTime);
+    return bm - am;
+  });
+
+  sorted.forEach(function(p) {
+    var mins = calcMatchMins(p, m.totalTime);
+    var flags = [];
+    if (p.dnp) flags.push('DNP');
+    if (p.injured) flags.push('INJ');
+    if (p.cards) p.cards.forEach(function(c) {
+      if (c.type==='Y') flags.push('YC');
+      if (c.type==='Y2') flags.push('2YC');
+      if (c.type==='R') flags.push('RC');
+    });
+    var stintStr = (p.stints||[]).map(function(s){return s.on+'\u2192'+s.off;}).join(', ');
+    html +=
+      '<div class="detail-player-row">' +
+        '<div class="detail-player-num">' + p.number + '</div>' +
+        '<div style="flex:1">' +
+          '<div class="detail-player-name">' + (p.name || 'Player ' + p.number) + '</div>' +
+          (stintStr ? '<div style="font-size:10px;color:var(--text-secondary)">' + stintStr + '</div>' : '') +
+        '</div>' +
+        '<div class="detail-player-mins">' + (mins > 0 ? mins + "'" : (p.dnp ? 'DNP' : '\u2014')) + '</div>' +
+        (flags.length ? '<div class="detail-player-flags">' + flags.join(' ') + '</div>' : '') +
+      '</div>';
+  });
+
+  body.innerHTML = html;
+}
+
+function exportMatchPDF(id) {
+  var m = getHistory().find(function(x) { return x.id === id; });
+  if (!m) return;
+  // Temporarily swap state, export, restore
+  var savedPlayers = players, savedScoreUs = scoreUs, savedScoreThem = scoreThem;
+  var savedSeconds = secondsAccrued, savedGameStyle = gameStyle, savedMatchEnded = matchEnded;
+  players = m.players; scoreUs = m.scoreUs; scoreThem = m.scoreThem;
+  secondsAccrued = m.totalTime; gameStyle = m.gameStyle; matchEnded = m.matchEnded;
+  el('gw-number').value = m.gw; el('match-name').value = m.opp;
+  exportPDF();
+  players = savedPlayers; scoreUs = savedScoreUs; scoreThem = savedScoreThem;
+  secondsAccrued = savedSeconds; gameStyle = savedGameStyle; matchEnded = savedMatchEnded;
+  el('gw-number').value = getMatchMeta().gw; el('match-name').value = getMatchMeta().opp;
+}
+
+function exportMatchCSV(id) {
+  var m = getHistory().find(function(x) { return x.id === id; });
+  if (!m) return;
+  var savedPlayers = players, savedSeconds = secondsAccrued, savedMatchEnded = matchEnded;
+  players = m.players; secondsAccrued = m.totalTime; matchEnded = m.matchEnded;
+  el('gw-number').value = m.gw; el('match-name').value = m.opp;
+  downloadCSV();
+  players = savedPlayers; secondsAccrued = savedSeconds; matchEnded = savedMatchEnded;
+}
+
 // ── Saved lineup ──────────────────────────────────────────────────────────────
 function saveLineup() {
   try {
@@ -1808,6 +2059,18 @@ el('btn-copy').addEventListener('click', copyText);
 el('btn-close-export').addEventListener('click', function() { closeModal('export-modal'); });
 el('btn-csv').addEventListener('click', downloadCSV);
 el('btn-email').addEventListener('click', sendEmail);
+el('btn-save-match').addEventListener('click', saveMatchResult);
+el('btn-history').addEventListener('click', function() {
+  if (running || (getSeconds() > 0 && !matchEnded)) {
+    if (!confirm('A match is in progress. Opening history will not affect your current match. Continue?')) return;
+  }
+  openHistory();
+});
+el('history-close').addEventListener('click', closeHistory);
+el('detail-back').addEventListener('click', function() {
+  el('match-detail').classList.remove('open');
+  el('history-list').style.display = '';
+});
 el('btn-save-lineup').addEventListener('click', saveLineup);
 el('btn-load-lineup').addEventListener('click', loadLineup);
 el('btn-clear-lineup').addEventListener('click', clearLineup);
@@ -1879,6 +2142,7 @@ if (matchEnded) {
   el('ended-banner').className = 'ended-banner show';
   el('end-btn').disabled = true;
   el('end-btn').style.opacity = '0.4';
+  el('btn-save-match').style.display = '';
   el('timer-sub').textContent = 'Match ended at ' + fmtTime(secondsAccrued);
 }
 renderPlayers();
