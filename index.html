@@ -135,6 +135,7 @@ h1{font-size:17px;font-weight:600;color:#fff}
 .player-num-input.injured-num{background:#EF9F27;color:#fff}
 .player-num-input.sentoff-num{background:#E24B4A;color:#fff}
 .player-num-input.default{background:var(--green-light);color:var(--green-text)}
+.sort-btn.active{background:var(--green-mid) !important;color:#fff !important;border-color:var(--green-mid) !important}
 .player-mins{font-size:14px;font-weight:700;color:var(--green-text);flex-shrink:0;min-width:32px;text-align:right}
 .player-mins.zero{color:var(--border)}
 .player-actions{display:flex;gap:6px;padding:0 12px 10px;flex-wrap:wrap}
@@ -318,7 +319,14 @@ h1{font-size:17px;font-weight:600;color:#fff}
   <button class="lineup-alert-close" id="lineup-alert-close">&#x2715;</button>
 </div>
 
-<div class="section-title">Squad &mdash; tap name or number to edit</div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin:14px 16px 4px">
+  <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Squad</span>
+  <div style="display:flex;gap:4px;align-items:center">
+    <span style="font-size:10px;color:var(--text-muted);font-weight:500">Sort:</span>
+    <button class="sort-btn active" id="sort-number" style="font-size:10px;padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--bg-card);color:var(--text-secondary);cursor:pointer;font-family:inherit;font-weight:600">#</button>
+    <button class="sort-btn" id="sort-name" style="font-size:10px;padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--bg-card);color:var(--text-secondary);cursor:pointer;font-family:inherit;font-weight:600">A–Z</button>
+  </div>
+</div>
 <div id="player-list"></div>
 
 <div class="bottom-btns">
@@ -431,7 +439,9 @@ function initPlayers(keepNames) {
   }
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
+var sortOrder = 'number'; // 'number' | 'name'
+
+
 var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
 var fmtTime = function(s) { return Math.floor(s / 60) + ':' + pad(s % 60); };
 
@@ -719,7 +729,30 @@ function renderPlayers() {
   var list = el('player-list');
   list.innerHTML = '';
 
-  players.forEach(function(p, i) {
+  // Build sorted index list — on-pitch / played first, bench at bottom
+  // Within each group, sort by selected order
+  var indices = players.map(function(_, i) { return i; });
+
+  function sortKey(i) {
+    var p = players[i];
+    var onPitch = p.onAt !== null;
+    var played  = p.stints.length > 0;
+    var sentOff = isSentOff(p);
+    // Group: 0 = on pitch, 1 = played/injured/sent-off, 2 = bench/DNP
+    var group = (onPitch || played || sentOff || p.injured) ? (onPitch ? 0 : 1) : 2;
+    var secondary = sortOrder === 'name'
+      ? (p.name || 'Player ' + p.number).toLowerCase()
+      : String(p.number).padStart(4, '0');
+    return group + '|' + secondary;
+  }
+
+  indices.sort(function(a, b) {
+    var ka = sortKey(a), kb = sortKey(b);
+    return ka < kb ? -1 : ka > kb ? 1 : 0;
+  });
+
+  indices.forEach(function(i) {
+    var p = players[i];
     var onPitch  = p.onAt !== null;
     var sentOff  = isSentOff(p);
     var hasY     = p.cards.some(function(c) { return c.type === 'Y'; });
@@ -1795,6 +1828,18 @@ el('dark-toggle').addEventListener('click', toggleDark);
 el('game-style').addEventListener('change', function() {
   gameStyle = parseInt(this.value);
   saveState();
+});
+el('sort-number').addEventListener('click', function() {
+  sortOrder = 'number';
+  el('sort-number').classList.add('active');
+  el('sort-name').classList.remove('active');
+  renderPlayers();
+});
+el('sort-name').addEventListener('click', function() {
+  sortOrder = 'name';
+  el('sort-name').classList.add('active');
+  el('sort-number').classList.remove('active');
+  renderPlayers();
 });
 el('lineup-alert-close').addEventListener('click', function() {
   hideLineupAlert();
