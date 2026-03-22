@@ -278,7 +278,26 @@ h1{font-size:17px;font-weight:600;color:#fff}
 #options-modal{align-items:flex-end}
 #options-modal .modal{width:100%;max-width:100%;border-radius:16px 16px 0 0;margin:0}
 textarea.form-input{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
+
+/* Drop player screen */
+.drop-player-row{background:var(--bg-card);border-radius:10px;margin:0 0 8px;padding:12px 14px;box-shadow:0 1px 3px var(--shadow-player);display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s,background 0.15s}
+.drop-player-row.dropped{border-color:#E24B4A;background:#FFF5F5}
+body.dark .drop-player-row.dropped{background:#2a1818}
+.drop-player-num{width:32px;height:32px;border-radius:50%;background:var(--green-light);color:var(--green-text);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.drop-player-row.dropped .drop-player-num{background:#E24B4A;color:#fff}
+.drop-player-name{flex:1;font-size:14px;font-weight:600;color:var(--text-primary)}
+.drop-player-badge{font-size:12px;font-weight:700;color:var(--text-muted)}
+.drop-player-row.dropped .drop-player-badge{color:#E24B4A}
 </style>
+
+<!-- PWA manifest (inline) -->
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Pitch%20Side%22%2C%22short_name%22%3A%22Pitch%20Side%22%2C%22description%22%3A%22Football%2Bmatchday%2Bmanagement%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230F6E56%22%2C%22theme_color%22%3A%22%230F6E56%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAEI0lEQVR42u3dMW7jMBQE0NxgG59tj7H375IuVYAFAov8f%2BYJmDaJxXl2TJHSx4fD4Th7%2FPn391PkpwAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAABwPO88AACgqvCtIABQ%2BGoQACh%2BNQQAlL4aAwCKXw0BAMWvhgCA8lcjAEDxqyEoZFH5X6%2FXdyC4CE7xzxf%2BfwEBgNryQwBATPl%2FU%2FxbEABQ%2FmoAjQiszhxe%2FltfkgFQ%2FjHlhwCA1VOcWwE0IABgSfl9CgBQ%2Fe7vUwCANUsb0gDE70BTfgBaEUQCuH2kAkhEAAAAACg%2FAK0I3KUBgGoEAAAAQHP5nyrdlPI%2FiQqAxeV%2FuoC3AZwCBsBCAJNLePv3AqD84xBM338AwBIA6e%2FIt14fAGXl%2F%2B075ZSfDQEAV6ckT%2F9MAMoBpM%2FLT3h9AJS9%2BwOQgQAAAAAw9QlA65QoAAAAAAAAAAAAAAAWvgHQtUAOAAAAsO5%2F%2F%2Fr8SbgBAKBu%2FwEAC7Y8Wg167l87AIbu%2BbUf4Mz3GgAGb3q3I%2Bz5L%2FUALLjrgz3Bz81mAbDotieJ6%2FOffn0AeJB17XUHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYA8HyAFwCNADwf4FkIAFgNajUoAPYD2A8AwBgEdoSdQWBLpD3Bdd85AADArBMA7gvkugMAAAAAgHuDdgJwb1AAAAAAAAAA8IikMgAekQQAAAAAAAAAnhNcBsBzgj0p%2Fi1%2Fy9Yr3QAA8Na%2FAQAARiOwGnR%2F%2BesA2A9g7j8OwGkEPnFyyl8LoGF9voVvRQCe3idg%2F0Fm%2BaMATLpvUMN9gVI6AwAAAKS8mCkI0gEk9SUOwAQEyQDSugIAAACkvajbCFIBJPYkFsBNBIkAUjsSDeAWgjQAyf2IB3ADQRKA9G5UAEhBoPwArEGwHUBLJ6oAbEag%2FADUIlB%2BAGoRKD8AtQiUH4DK2SGzPQDUXTBzgQsAS6mVHwAQFB8ACJQfABAUHwAQFB8AGJQeABiUHgAYlB6AOhTOYwgAc%2BvO6bRzCgAAABgsAAAwWAAAYLAAAMBgAQDAjcHaOpVpOnHvOQUAAAAUCQAAFAkAABQJAAAUCQAAFAkAABQJAAAUCQAAAAAAAAAAAAAAAAAAAAAAAAAAAEt3AQAAAAEAAAEAAAEAAFsibYk0WM4pAKYTAQAAAAAAAAAAAAAAAAAAnNM5AQAAAAwWAAAYLAAAMFgAAGCwAADAYAFQA%2BD0YbAAGFVIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAlshnDgAEAAAEAAAEAAAEAAAEgKRDcaV6GtRACwAiAIgAIAKACAACAAACAAACAAACAAACwIPHF5DFg%2BqNkEuJAAAAAElFTkSuQmCC%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAS0ElEQVR42u3dQVIjWQwAUd%2BAjc%2FGMbj%2FzvgABGACu0rKlxG5H2q%2BpOyOme7LBQAAAD%2Fz9vF%2BI0meS9cJAoAkBQAgAEhSAAACgCQFACAASFIAAAKAJAUAIABIUgAAAoAkBQAEAElSAEAAkCQFAAQASVIAQACQJAUABABJUgBAAJAkBQAEAElSAEAAkCQFAAQASVIAQACQJAUABABJCgBAAJCkAAAEAEkKAEAAkKQAAAQASQoAQACQpAAABABJCgAIAJKkAIAAIEkKAAgAkqQAgAAgSQoACACSpACAACBJCgAIAJKkAIAAIEkKAAgAkqQAgAAgSQoACACSFACAACBJAQAIAJIUAIAAIEkBAAgAkhQAgAAgSQEACACSFAAQAAaNJAUABABJUgBAAJAkBQAEAElSAEAAkCQFAAQASVIAQACQJAUABABJUgBAAJAkBQAEAHn3SHx%2FCgAIAHLpkRcHFACAAKBDLwwoACAASAdfEFAAQACQDr4goACAACAdfEFAAQABQEcfYoACAAKAjj7EAAUABAAdfYgBCgAIADr6EAMUABAAdPghBCgAIADo8EMIUABAANDRhxigAIAAoMMPISAAAAFAhx9CQAAAAoAOP4SAAAAEgMMPCAEBAAgAhx8QAgIAEACOP0QABQAgABx%2BCAEKAAgAOvwQAhQAEAB0%2FCECKAAgAOjwQwhQAEAA0OGHEKAAgACg4w8RQAHgoJEOP4QAeUgw%2BRB0%2FPdyvV7%2FLEQABQDp%2BAcOviAQARQApMPv8AsBIUABQDr%2BDr8QEAEUAKTjnz78QkAEUACQDn%2F8%2BIsAIUABQDr%2B0eMvAkQABQDp%2BEePvwgQARQApOMfPPxCQARQAJCOf%2Fz4iwARQAFAOv4CACKAAoB0%2BCvHXwQIAQoA0vGPHn8RIAIoAEjHP3r8RYAIoAAgbXgBABFAAUDHH5XjLwJEAAUAHX8IAIgACgA6%2FqgcfxEgAigA6PhDAEAEUADQ8Ufl%2BIsAEUABQAEAAQABQAFAx9%2FxrwkRQAFAx18ACACIAAoAOv4CQABABFAA0PEXAAIAIoACgI6%2F4y8CIAIoAOj4CwABIAJIAUABIAAEgAAgBQAdfwEgAEQAKQDo%2BAsAASACSAFAx18ACAARQAFAOv4CQACIAAoAUgAIAAEgACgASMdfAAgAEUABQMcfAkAAiAAKAAoACAABIAAoAOj4QwAIABFAAUDHHyLA8RcBFAAUABAAAkAAUADQ8YcAgAigAKDjLwAEAEQABQAFgAhw%2FCEAKADo%2BAsAAQARQAHA7vHfeoAcf29KBFAAUAC86DgKgG4A1CLHfqMA4KjjXzpMAsCbEgEUAMwHQPVAOf7elACgAGDy%2BDtWN8ffmxIBFADsBICjJQC8KwFAAUDHP7%2BwHX9vSgRQAHB1ADhiuyPAdztnBNh7FAB0%2FE%2B8sAWANyUCKADo%2BDtovpU3JQIoADg7APyqdv%2F38o1mRIA9KAB8DAFgUTtwvk0wAuxBAeBjOP4Wtf%2BtzTcRARQAFAAWtYPnWwgACgA6%2Fha1w%2BcbiAAKAAoAy9qfb%2B%2FvTRAAFAB0%2FLOLuvo3CdZ%2BXhFAAUABYFFn%2F4770s9ZfVf2owCg429RL%2Fm73%2F1c3pQIoACgAAgGwCP%2FTqb%2F83tTAoACgH77XwQsxpsSABQA9Kt%2FASAAvCkRQAFAASAABIA3JQAoAOj4iwDH35sSARQAAsCyFgACwJsSABQAAsCyFgACwJsSAALAh3D8LWsBIAC8KREgACgALGsBIAC8KftTAFAAWNYCQAAIAAoAOv4WtQDwrkQABQAFgEUtALwrAUABQAFgUcO7EgAUACwef4sa3tWud2WfCgAKAMtaAHhTwTdlnwoACgDLWgB4UwKAAoCOv2UtALypypuyVwUABYBlLQC8KQFAAUABYFkLAG9KAFAAUABY1q60NyUAKADYPf7VhQ1vavObsl8FAAWAZS0AvCkBQAFAAWBZCwBvSgBQAFAARBc2vKntb8p%2BFQB0%2FC3rQQHgZ%2FKmRAAFgACwrCOL2s%2FoXQkACgABYFlHFrWf15sSABQAAkAAhBa1n927EgAUAPQfboUWtW%2FgTQkACgCe%2FvhvXdi%2Bo29R%2FL9J7FsBQAFgWfuGvocAoACgAGgtbN%2FOd6n%2BWRL2rQCgAMgubN%2FLNyr%2FQVL2rQCgAEgubN%2FJt6r%2FKZL2rQCgAMgtbN%2FI9%2FJHSAsAAUDHP7awfRvfzfEXAQKAAiC2sH0T38%2FxFwACgAIgtrB9C9%2FR8RcAAoACILS0fQPf0%2BEXAAKAAiC0sAWQb%2Bv4CwABQAEQW9h%2BB8T3dfgFgACgAIjEgN%2F56B5ER18ACAAfQgDEYsDveAiAypsSABQAAiAZBn6HQwSU35QAoAAQABAAAgACgALA8YfjLwIgAgSAABAAEAACAAJAAFAAQAAIAAgAAUABAAEgACAABAAFABx%2FEQABIAAoACAABIAAoACgAIAAEAACgAKAAgACQAAIAAoACgAIAAEgACgAKAAgACAAKAAoAASAAIAAoACgABAAAgACgAKAAkAACAAIAAoACgABIAAgACgABAAEgACAAKAAEAAQAAIAAoACQABABDj%2BEAAUAAIAAkAAQABQAAgACAABAAEgACgAIAAEAASAAKAIgAhw%2FOH4CwAKAAgAAQABIAAoAOYeSxHg%2BFfelACgABAAfoU8YHELAG9KAFAAUAC8%2BCgKAN9ZCAgAAUABED6GIsC3FQICQABQAIQPoG%2FgewoBASAAKACiR8%2B38C2FgAAQABQA4YPnm%2Fh%2BIkAACAAKgOih8218NxEgAAQARUD0wPk%2BvpkIcPwFAAVA9Lj5Tr5VPQLsWwFAAZD9la3v5RuVI8C%2BFQAUAOn%2FuM13822qEWDfCgAKAP9lu2%2FomwQjwL4VABQA6UXt4PkWAoACgCIguKgdPt%2BgGAH2rACgALCs%2Fd0B3pQAoACgAGgu6urfJOhNdSPAnhUAFAAWdezvuC%2F9nN6VABAAFAAW9ehl7efypgQABYAIsKz919vf%2FjuZ%2Fs%2FvTTn%2BFAACwKK2sBfjTQkACgAKAMtaAHhTAoACgALAshYA3pQAoAAQARa1he34e1OOPwWAALCsBYAA8KYEAAWAALCsBYAA8KYEgADwIQSAZS0ABIA3JQAEAEWAZS0ABIA35fgLAAoAy1oACAABQAFAAWBRCwDvKvWu7FMBQBFgUQsAARB7V%2FaoAKAAsKgFgAAQABQAFAAWtQDwrgQABQBFgGUtALwpx58CgALAsoY3JQAoACgALGt4UwKAAoCVCLCs4U3NfVP2pgCgALCsBYAAEAAUABQAlrUAEAACgAKAIsDCdvy9KcefAoACwLKGNyUAKAAoACxreFMCgAKAIsCihjfl%2BFMAUABY1qf%2F%2FgJAAFAAUARY1oMOpZ%2FRu3L8KQDodwEiAeDn9aYEAAUA%2FS5A6Bj62b0rx58CgH4XIHYE%2FfzelACgAKAICB0%2F38KbcvwpACgAYsva9%2FCmBAAFAP01wY6d7%2BJNCQAKAIqArYvaN%2FKmHH8KAK4IgMkL23fyrTb9h5T2oADwMUSACPDb276X408BQAFgYTtmvtv2P0fB%2FhMAAoAiwBHz%2FRx%2FCgCKABHgePmOjj8FAAVAdGn7Br7n1r9Qyb6jAKAIcKx8V8efAoA8TwActbTFj%2B%2B7%2Fa9RtucoADgmAp69uMvBU%2F6VcOVNOf4UABwfAP%2B5uGuRIwC6b0oAUABwXQT8doFP%2F%2BcXAd6U408BQBGwGAEAx58CgALA8RcBEAAUABQBAkAAwPGnAKAIEAACAI4%2FBQAFgAAQABAAFAAUAY6%2FCIC9RQFAESAABIDjTwoACgABIAAEACkAKAIEgABw%2FCkASBEgAASA408BQAoAASAABAAFACkCBIAAcPwpAEgIAAHg%2BFMAUARAAAgAx58CgAIAAkAACAAKAIoACAAB4PhTAFAEQAAIAMefAoAiQAQ4%2FnD8KQAoAgSAAIDjTwFAESAABAAcfwoAigABIAAcf1IAUACIAMdfAJACgCJAAAgAx58UABQBIsDxd%2FxJAUARIAAEgONPCgCKAAEgABx%2FCgBSBIgAx9%2FxpwAgRYAIcPwdfwoAUgQIAAHg%2BFMAkCJABDj%2Bjj8FACkCRIDj7%2FhTAJAiQAAIAMefAoAUAtUIgMNPAUCKgFgEwPGnACBFQCwC4PhTAJAiIBQCcPwpAEgREIsAOP4UAKQQiEUAHH4KAFIEhEIAjj8FACkCQiEAx58CgBQBoRCA408BQAqBSAzA4acAIEXA4jCA408BQAoBwOGnACBFAOD4UwCQQgAOPykASBEAx58UAKQQgMNPCgBSCMDhJwUAKQLg%2BJMCgBQCcPhJAUAKATj8pAAghQAcflIAkEIADj8pAEghAIefFACkEIDDTwoAUgjA4ScFACkGHH2SAoAUAg4%2FKQAEACkGHH1SAJAUA44%2BKQBICgGHnxQAJAWBg08KAJJiwNEnBQBJQeDgkwKApChw7EkBQLIWBf79kQKA5NI48O%2BBFAAWLOA4mkGYQQFg%2BQBmyAzCDAoAyweWD80gzKAAsHxg%2BdAMwgwKAMsHlg%2FNIMygALB8YPnQDMIMCgDLB5aPGQTMoACwfGD5mEHADAoAyweWjxkEzKAAsHxg%2BZhBwAwKAMsHlo8ZhBmkALB8YPmYQZhBCgDLB5aPGYQZFAC0fGD5mEGYQQFAyweWjxmEGRQAlg9g%2BZhBmEEBYPkAlo8ZhBkUAJYPYPmYQZhBAWD5AJaPGYQZFACWDywfmkGYQQFg%2BcDyoRmEGRQAlg8sH5pBmEEBYPnA8qEZhBkUAJYPLB8zCJhBAWD5wPIxg4AZFACWDywfMwiYQQFg%2BcDyMYOAGRQAlg8sHzMIM0gBYPnA8jGDMIMUAJYPLB8zCDMoAGj5wPIxgzCDAoCWDywfMwgzKAAsH8DyMYMwgwLA8gEsHzMIMygALB%2FA8jGDMIMCwPIBLB8zCDMoACwfWD40gzCDAsDygeVDMwgzKAAsH1g%2BNIMwgwLA8oHlQzMIMygALB9YPmYQMIMCwPKB5WMGATMoACwfWD5mEDCDAsDygeVD2m9mUAAYEFg%2BpACgADAgsHxIAUABYEBg%2BdB%2BM4MCwIcQALB8aL%2BZQQFAAQDLh%2FabGRQABgSwfGi%2FmUEBYEAAy4f2mxkUAAYEsHzMIMygALB8AMvHDMIMCgDLB5YPzSDMoACwfGD50AzCDAoAyweWD80gzKAAsHxg%2BdAMwgwKAMsHlg8BMygALB9YPmYQMIMCwPKB5WMGATMoACwfWD5mEDCDAsDygeVjBgEzJAAsH1g%2BZhBmkALA8oHlYwZhBgWAALB8YPmYQZhBAUDLB5aPGYQZFACWD2D5mEGYQQFg%2BQCWjxmEGRQAlg9g%2BZhBmEEBYPkAlo8ZhBkUAJYPLB%2BaQZhBAWD5wPKhGYQZFACWDywfmkGYQQFg%2BcDyoRmEGRQAlg8sH5pBmEEBYPnA8jGDgBkUAJYPLB8zCJhBAWD5wPIxg4AZFACWDywfMwiYQQFg%2BcDyMYMwgxQAlg8sHzMIMygABIDlA8vHDMIMCgAGl49%2FzzSDsN8EAAUAaQZhvwkAGhDSDMJ%2BEwCWjwEhzSDsNwFg%2BRgQ0gzCfhMAlo8BIc0g7DcBYPkYENIMwn4TAJaPASHNIOw3AWD5GBDSDMJ%2BEwCWjwEhBQDsNwFg%2BRgQUgDAfhMAlo8BoRk0g6QAsHwsH5pBM0gKAMvH8qEZNIOkALB8LB%2BaQTNICgDLx%2FKhGTSD5NcBgMewfEgBYAYdNAgAy4cUAGZQAEAAWD6kADCDAgACwPIhBYAZFAAQAJYPKQDwHFwnCAABQAEAAQAIAAFAAQABAAgAAUABAAEACAABQAEAAQAIAFIAQAAAAoAUABAAgAAgBQAEAASAACAFAAQABIAAIAUABAAEgAAgBQAEAASAACAFAAQABIAAIAUABAAEgAAgBQAEAASAACAFAAQABIAAoAAABAAEgACgAAAEAASAAKAAAAQABIAAoACAAAAEgACgAIAAAASAAKAAgAAABIAAoACAAAAEACkAIAAAAUAKAAgAQACQAgACAAJAAJACAAIAAkAAkAIAAgACQACQAgACAAJAAJACAAIAAkAAkAIAAgACQACQAgACAAJAAJACAAIAAkAAUAAAAgACQABQAAACAAJAAFAAAAIAAkAAUABAAAACQABQAEAAAAJAAFAAQAAAAkAAUABAAAACgBQAEACAACAFAAQAIABIAQABgDqWMkmeT9cJAoAkBQAgAEhSAAACgCQFACAASFIAAAKAJAUAIABIUgAAAoAkBQAEAElSAEAAkCQFAAQASVIAQACQJAUABABJUgBAAJAkBQAEAElSAEAAkCQFAAQASVIAQACQJAUABABJCgBAAJCkAAAEAEkKAEAAkKQAAAQASQoAQACQpAAABABJCgAIAJKkAIAAIEkKAAgAkqQAgAAgSQoACACSpAA4mE%2BTn4vwAh4g4gAAAABJRU5ErkJggg%3D%3D%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pitch Side">
+<meta name="theme-color" content="#0F6E56">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAEI0lEQVR42u3dMW7jMBQE0NxgG59tj7H375IuVYAFAov8f+YJmDaJxXl2TJHSx4fD4Th7/Pn391PkpwAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAAAgAABwPO88AACgqvCtIABQ+GoQACh+NQQAlL4aAwCKXw0BAMWvhgCA8lcjAEDxqyEoZFH5X6/XdyC4CE7xzxf+fwEBgNryQwBATPl/U/xbEABQ/moAjQiszhxe/ltfkgFQ/jHlhwCA1VOcWwE0IABgSfl9CgBQ/e7vUwCANUsb0gDE70BTfgBaEUQCuH2kAkhEAAAAACg/AK0I3KUBgGoEAAAAQHP5nyrdlPI/iQqAxeV/uoC3AZwCBsBCAJNLePv3AqD84xBM338AwBIA6e/It14fAGXl/+075ZSfDQEAV6ckT/9MAMoBpM/LT3h9AJS9+wOQgQAAAAAw9QlA65QoAAAAAAAAAAAAAAAWvgHQtUAOAAAAsO5///r8SbgBAKBu/wEAC7Y8Wg167l87AIbu+bUf4Mz3GgAGb3q3I+z5L/UALLjrgz3Bz81mAbDotieJ6/Offn0AeJB17XUHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYA8HyAFwCNADwf4FkIAFgNajUoAPYD2A8AwBgEdoSdQWBLpD3Bdd85AADArBMA7gvkugMAAAAAgHuDdgJwb1AAAAAAAAAA8IikMgAekQQAAAAAAAAAnhNcBsBzgj0p/i1/y9Yr3QAA8Na/AQAARiOwGnR/+esA2A9g7j8OwGkEPnFyyl8LoGF9voVvRQCe3idg/0Fm+aMATLpvUMN9gVI6AwAAAKS8mCkI0gEk9SUOwAQEyQDSugIAAACkvajbCFIBJPYkFsBNBIkAUjsSDeAWgjQAyf2IB3ADQRKA9G5UAEhBoPwArEGwHUBLJ6oAbEag/ADUIlB+AGoRKD8AtQiUH4DK2SGzPQDUXTBzgQsAS6mVHwAQFB8ACJQfABAUHwAQFB8AGJQeABiUHgAYlB6AOhTOYwgAc+vO6bRzCgAAABgsAAAwWAAAYLAAAMBgAQDAjcHaOpVpOnHvOQUAAAAUCQAAFAkAABQJAAAUCQAAFAkAABQJAAAUCQAAAAAAAAAAAAAAAAAAAAAAAAAAAEt3AQAAAAEAAAEAAAEAAFsibYk0WM4pAKYTAQAAAAAAAAAAAAAAAAAAnNM5AQAAAAwWAAAYLAAAMFgAAGCwAADAYAFQA+D0YbAAGFVIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAlshnDgAEAAAEAAAEAAAEAAAEgKRDcaV6GtRACwAiAIgAIAKACAACAAACAAACAAACAAACwIPHF5DFg+qNkEuJAAAAAElFTkSuQmCC">
 </head>
 <body>
 <div class="toast" id="toast"></div>
@@ -373,7 +392,10 @@ textarea.form-input{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Aria
     </div>
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin:14px 16px 4px">
-      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Squad</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Squad</span>
+        <span id="on-pitch-count" style="font-size:11px;font-weight:700;background:var(--green-light);color:var(--green-text);border-radius:12px;padding:2px 8px;display:none"></span>
+      </div>
       <div style="display:flex;gap:4px;align-items:center">
         <span style="font-size:10px;color:var(--text-muted);font-weight:500">Sort:</span>
         <button class="sort-btn active" id="sort-number" style="font-size:10px;padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--bg-card);color:var(--text-secondary);cursor:pointer;font-family:inherit;font-weight:600">#</button>
@@ -465,7 +487,7 @@ textarea.form-input{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Aria
 
 <!-- Formation -->
 <div class="pitch-modal" id="pitch-modal">
-  <div class="pitch-topbar"><h2>&#9917; Formation</h2><button class="pitch-close" id="pitch-close">Done</button></div>
+  <div class="pitch-topbar"><h2>&#9917; Formation</h2><span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.2);color:#fff;padding:3px 8px;border-radius:10px;letter-spacing:0.05em">BETA</span><button class="pitch-close" id="pitch-close">Done</button></div>
   <div class="pitch-hint">Drag players to set your formation</div>
   <div class="pitch-wrap" id="pitch-wrap">
     <svg class="pitch-svg" id="pitch-svg" viewBox="0 0 300 450" preserveAspectRatio="xMidYMid meet"></svg>
@@ -597,6 +619,20 @@ textarea.form-input{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Aria
   </div>
 </div>
 
+<!-- ═══════ DROP PLAYER PAGE ═══════ -->
+<div class="page" id="drop-page">
+  <div class="topbar">
+    <button class="detail-back" id="drop-back-btn">&#8592; Back</button>
+    <h1>Select Players to Drop</h1>
+    <div style="width:60px"></div>
+  </div>
+  <div class="page-body">
+    <div id="drop-instruction" style="font-size:13px;color:var(--text-secondary);margin-bottom:14px;line-height:1.5;padding:0 4px"></div>
+    <div id="drop-player-list"></div>
+  </div>
+  <button class="kickoff-btn" id="drop-confirm-btn" style="opacity:0.4;pointer-events:none">&#9917; Confirm &amp; Kick Off</button>
+</div>
+
 <!-- ═══════ SQUAD EDITOR PAGE ═══════ -->
 <div class="page" id="squad-editor-page">
   <div class="topbar">
@@ -716,7 +752,7 @@ function showToast(msg,dur){var t=el('toast');t.textContent=msg;t.classList.add(
 function vibe(p){try{if(navigator.vibrate)navigator.vibrate(p);}catch(e){}}
 
 // ── Page navigation ────────────────────────────────────────────────────────
-var PAGES=['home-page','teams-page','summary-page','squad-editor-page','setup-page','match-page'];
+var PAGES=['home-page','teams-page','summary-page','squad-editor-page','setup-page','match-page','drop-page'];
 function showPage(id){PAGES.forEach(function(p){el(p).classList.remove('open');});if(id)el(id).classList.add('open');}
 function showMatchScreen(){showPage('match-page');}
 
@@ -879,7 +915,14 @@ el('setup-edit-squad-btn').addEventListener('click',function(){openSquadEditor(s
 el('kickoff-btn').addEventListener('click',function(){
   var opp=el('setup-opp').value.trim();if(!opp){showToast('Please enter an opponent name');el('setup-opp').focus();return;}
   var team=getTeam(setupTeamId);if(!team){showToast('Team not found');return;}
-  startNewMatch({teamId:setupTeamId,teamName:team.name,statsEnabled:team.statsEnabled!==false,gw:parseInt(el('setup-gw').value)||1,opp:opp,gameStyle:parseInt(el('setup-format').value)||11,halfMins:parseInt(el('setup-half').value)||40,squadSize:parseInt(el('setup-squad-size').value)||16,weather:selectedWeather,temp:selectedTemp,venue:el('setup-venue').value.trim(),kickoff:el('setup-kickoff').value,notes:el('setup-notes').value.trim(),lineup:team.lineup||[]});
+  var squadSz=parseInt(el('setup-squad-size').value)||16;
+  var lineup=team.lineup||[];
+  // If lineup has more players than squad size, show drop screen
+  if(lineup.length > squadSz){
+    openDropPlayerScreen({teamId:setupTeamId,teamName:team.name,statsEnabled:team.statsEnabled!==false,gw:parseInt(el('setup-gw').value)||1,opp:opp,gameStyle:parseInt(el('setup-format').value)||11,halfMins:parseInt(el('setup-half').value)||40,squadSize:squadSz,weather:selectedWeather,temp:selectedTemp,venue:el('setup-venue').value.trim(),kickoff:el('setup-kickoff').value,notes:el('setup-notes').value.trim(),lineup:lineup});
+    return;
+  }
+  startNewMatch({teamId:setupTeamId,teamName:team.name,statsEnabled:team.statsEnabled!==false,gw:parseInt(el('setup-gw').value)||1,opp:opp,gameStyle:parseInt(el('setup-format').value)||11,halfMins:parseInt(el('setup-half').value)||40,squadSize:squadSz,weather:selectedWeather,temp:selectedTemp,venue:el('setup-venue').value.trim(),kickoff:el('setup-kickoff').value,notes:el('setup-notes').value.trim(),lineup:lineup});
 });
 
 // ── Match state ────────────────────────────────────────────────────────────
@@ -908,6 +951,12 @@ function startNewMatch(config){
   for(var i=0;i<squadSize;i++){var lp=lu[i];players.push(makePlayer(i,lp?lp.name||'':'',lp?lp.number||i+1:i+1));}
   el('gw-number').value=config.gw;
   el('match-name').value=config.opp;
+  // Add any explicitly dropped players back as DNP
+  if(config.droppedPlayers&&config.droppedPlayers.length){
+    config.droppedPlayers.forEach(function(dp){
+      players.push({number:dp.number||0,name:dp.name||'',stints:[],onAt:null,onHalf:null,injured:false,injuredAt:null,cards:[],goals:0,assists:0,dnp:true});
+    });
+  }
   setHalf(1,'1st Half');saveState();
   syncMatchUIFromState();showMatchScreen();
 }
@@ -1052,6 +1101,9 @@ function cardSVG(fill,w,h){w=w||11;h=h||14;return '<svg width="'+w+'" height="'+
 function crossSVG(color){return '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5.5" y="1" width="5" height="14" rx="1.5" fill="'+color+'"/><rect x="1" y="5.5" width="14" height="5" rx="1.5" fill="'+color+'"/></svg>';}
 function renderPlayers(){
   var list=el('player-list');list.innerHTML='';
+  // Update on-pitch count badge
+  var badge=el('on-pitch-count');
+  if(badge){var onCount=countOnPitch();if(onCount>0){badge.textContent=onCount+' / '+gameStyle+' on pitch';badge.style.display='';}else{badge.style.display='none';}}
   var indices=players.map(function(_,i){return i;});
   function sortKey(i){var p=players[i],op=p.onAt!==null,so=isSentOff(p),g=(op||p.stints.length>0||so||p.injured)?(op?0:1):2;var s=sortOrder==='name'?(p.name||'Player '+p.number).toLowerCase():String(p.number).padStart(4,'0');return g+'|'+s;}
   indices.sort(function(a,b){var ka=sortKey(a),kb=sortKey(b);return ka<kb?-1:ka>kb?1:0;});
@@ -1074,7 +1126,7 @@ function renderPlayers(){
     var th='';p.stints.forEach(function(st){th+='<span class="stint-tag">'+st.on+'\' \u2192 '+st.off+'\'</span>';});if(op)th+='<span class="stint-tag active">'+p.onAt+'\' \u2192 now</span>';if(p.injured)th+='<span class="tag tag-i">'+crossSVG('#854F0B')+' Injured'+(p.injuredAt!==null?' '+p.injuredAt+'\'':'')+'</span>';p.cards.forEach(function(c){if(c.type==='Y')th+='<span class="tag tag-y">'+cardSVG('#F5C518',9,12)+' Yellow '+c.min+'\'</span>';if(c.type==='Y2')th+='<span class="tag tag-r">'+cardSVG('#F5C518',9,12)+cardSVG('#E24B4A',9,12)+' 2nd yellow '+c.min+'\'</span>';if(c.type==='R')th+='<span class="tag tag-r">'+cardSVG('#E24B4A',9,12)+' Red card '+c.min+'\'</span>';});
     if(th){var tr2=document.createElement('div');tr2.className='stint-info';tr2.innerHTML=th;card.appendChild(tr2);}
     var aw=document.createElement('div');aw.className='player-actions';var ab=document.createElement('button');ab.className='sub-btn';
-    if(p.dnp){ab.className+=' sub-dis';ab.textContent='Did not play';ab.disabled=true;}else if(matchEnded){ab.className+=' sub-dis';ab.textContent='Match ended';ab.disabled=true;}else if(so){ab.className+=' sub-red';ab.textContent='Sent off';ab.disabled=true;}else if(p.injured){ab.className+=' sub-inj';ab.textContent='No further part (injured)';ab.disabled=true;}else if(op){ab.className+=' sub-off';ab.textContent='Sub OFF';ab.addEventListener('click',function(){openSubOffPicker();});}else{ab.className+=' sub-on';ab.textContent='Sub ON';ab.addEventListener('click',function(){openSubOnPicker();});}
+    if(p.dnp){ab.className+=' sub-dis';ab.textContent='Did not play';ab.disabled=true;}else if(matchEnded){ab.className+=' sub-dis';ab.textContent='Match ended';ab.disabled=true;}else if(so){ab.className+=' sub-red';ab.textContent='Sent off';ab.disabled=true;}else if(p.injured){ab.className+=' sub-inj';ab.textContent='No further part (injured)';ab.disabled=true;}else if(op){ab.className+=' sub-off';ab.textContent='Sub OFF';(function(ii){ab.addEventListener('click',function(){subOff(ii);setTimeout(function(){openSubOnPicker(ii);},200);});}(i));}else{ab.className+=' sub-on';ab.textContent='Sub ON';(function(ii){ab.addEventListener('click',function(){openSubOffForOnPicker(ii);});}(i));}
     aw.appendChild(ab);card.appendChild(aw);
     var gr=document.createElement('div');gr.className='ga-row';
     function mkCtr(lbl,val,mfn,pfn,uc){var c=document.createElement('div');c.className='ga-counter';var l=document.createElement('div');l.className='ga-label';l.textContent=lbl;var m=document.createElement('button');m.className='ga-btn';m.textContent='\u2212';m.addEventListener('click',mfn);var v=document.createElement('div');v.className='ga-val';v.textContent=val;var pl=document.createElement('button');pl.className='ga-btn '+(uc||'up');pl.textContent='+';pl.addEventListener('click',pfn);c.appendChild(l);c.appendChild(m);c.appendChild(v);c.appendChild(pl);return c;}
@@ -1239,6 +1291,47 @@ function openSubOnPicker(replacingIdx) {
   openModal('subon-modal');
 }
 
+function openSubOffForOnPicker(comingOnIdx) {
+  // Show who's coming OFF when a bench player's Sub ON is tapped
+  var onPitch = players.filter(function(p){ return p.onAt !== null && !isSentOff(p) && !p.injured; });
+  if (!onPitch.length) {
+    // Nobody to sub off — just sub straight on
+    subOn(comingOnIdx);
+    return;
+  }
+  var comingOn = players[comingOnIdx];
+  var list = el('suboff-list');
+  list.innerHTML = '';
+  // Update header to show who's coming on
+  var header = el('suboff-list').previousElementSibling;
+  if (header) header.textContent = (comingOn ? (comingOn.name || 'Player ' + comingOn.number) + ' is coming ON — who is coming OFF?' : 'Who is coming OFF?');
+  onPitch.forEach(function(p) {
+    var btn = document.createElement('button');
+    btn.style.cssText = 'display:flex;align-items:center;gap:12px;border:none;border-radius:10px;padding:12px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;background:#FFE8E8;color:#C0392B;width:100%;text-align:left';
+    var num = document.createElement('div');
+    num.style.cssText = 'width:30px;height:30px;border-radius:50%;background:#E24B4A;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0';
+    num.textContent = p.number;
+    var name = document.createElement('div');
+    name.textContent = p.name || 'Player ' + p.number;
+    btn.appendChild(num);
+    btn.appendChild(name);
+    var mins = document.createElement('div');
+    mins.style.cssText = 'margin-left:auto;font-size:12px;color:#E24B4A;font-weight:600;flex-shrink:0';
+    mins.textContent = calcMins(p) + "'";
+    btn.appendChild(mins);
+    (function(offIdx) {
+      btn.addEventListener('click', function() {
+        closeModal('suboff-modal');
+        subOff(offIdx);
+        setTimeout(function() { subOn(comingOnIdx); }, 50);
+      });
+    }(players.indexOf(p)));
+    list.appendChild(btn);
+  });
+  openModal('suboff-modal');
+}
+
+
 
 // ── Persist ────────────────────────────────────────────────────────────────
 function saveState(){try{localStorage.setItem('subtracker_state',JSON.stringify({secondsAccrued:secondsAccrued,running:false,matchEnded:matchEnded,halfMins:halfMins,currentHalf:currentHalf,halfLabel:halfLabel,halfStartSeconds:halfStartSeconds,halfDisplayOffset:halfDisplayOffset,squadSize:squadSize,gameStyle:gameStyle,scoreUs:scoreUs,scoreThem:scoreThem,gw:el('gw-number').value,opp:el('match-name').value,matchTeamId:matchTeamId,matchTeamName:matchTeamName,matchWeather:matchWeather,matchTemp:matchTemp,matchVenue:matchVenue,matchKickoff:matchKickoff,matchNotes:matchNotes,matchStatsEnabled:matchStatsEnabled,players:players,statsEvents:statsEvents}));}catch(e){}}
@@ -1329,6 +1422,74 @@ function applyLineupIfFresh(){
   try{var raw=localStorage.getItem('subtracker_lineup');if(!raw)return;var lineup=JSON.parse(raw);lineup.forEach(function(entry,i){if(players[i]){if(entry.name)players[i].name=entry.name;if(entry.number)players[i].number=entry.number;}});}catch(e){}
 }
 
+
+// ── Drop player screen ─────────────────────────────────────────────────────
+var dropConfig = null;
+var droppedIndices = [];
+
+function openDropPlayerScreen(config) {
+  dropConfig = config;
+  droppedIndices = [];
+  var need = config.lineup.length - config.squadSize;
+  el('drop-instruction').innerHTML =
+    'Your squad has <strong>' + config.lineup.length + ' players</strong> but this match is <strong>' + config.squadSize + ' players</strong>. ' +
+    'Tap <strong>' + need + ' player' + (need > 1 ? 's' : '') + '</strong> to drop from today’s match. They will be marked as DNP.';
+  renderDropPlayerList(need);
+  el('drop-confirm-btn').style.opacity = '0.4';
+  el('drop-confirm-btn').style.pointerEvents = 'none';
+  showPage('drop-page');
+}
+
+function renderDropPlayerList(need) {
+  var list = el('drop-player-list');
+  list.innerHTML = '';
+  dropConfig.lineup.forEach(function(p, i) {
+    var row = document.createElement('div');
+    var dropped = droppedIndices.indexOf(i) !== -1;
+    row.className = 'drop-player-row' + (dropped ? ' dropped' : '');
+    row.innerHTML =
+      '<div class="drop-player-num">' + (p.number || i+1) + '</div>' +
+      '<div class="drop-player-name">' + (p.name || 'Player ' + (p.number || i+1)) + '</div>' +
+      '<div class="drop-player-badge">' + (dropped ? '✕ DNP' : '') + '</div>';
+    (function(idx) {
+      row.addEventListener('click', function() {
+        var pos = droppedIndices.indexOf(idx);
+        if (pos !== -1) {
+          droppedIndices.splice(pos, 1);
+        } else {
+          if (droppedIndices.length < need) droppedIndices.push(idx);
+          else { showToast('Already selected ' + need + ' player' + (need > 1 ? 's' : '')); return; }
+        }
+        renderDropPlayerList(need);
+        updateDropConfirmBtn(need);
+      });
+    }(i));
+    list.appendChild(row);
+  });
+}
+
+function updateDropConfirmBtn(need) {
+  var btn = el('drop-confirm-btn');
+  var ready = droppedIndices.length === need;
+  btn.style.opacity = ready ? '1' : '0.4';
+  btn.style.pointerEvents = ready ? '' : 'none';
+  btn.textContent = ready
+    ? '⚽ Confirm & Kick Off'
+    : '⚽ Drop ' + (need - droppedIndices.length) + ' more player' + (need - droppedIndices.length > 1 ? 's' : '');
+}
+
+el('drop-back-btn').addEventListener('click', function() { showPage('setup-page'); });
+el('drop-confirm-btn').addEventListener('click', function() {
+  if (!dropConfig) return;
+  // Build trimmed lineup with dropped players marked as DNP
+  var trimmedLineup = dropConfig.lineup.filter(function(_, i) {
+    return droppedIndices.indexOf(i) === -1;
+  });
+  // Start match with trimmed lineup, then mark dropped as DNP after init
+  var configToUse = Object.assign({}, dropConfig, { lineup: trimmedLineup, droppedPlayers: droppedIndices.map(function(i){ return dropConfig.lineup[i]; }) });
+  startNewMatch(configToUse);
+});
+
 // ── Event bindings ─────────────────────────────────────────────────────────
 el('start-btn').addEventListener('click',startTimer);
 el('pause-btn').addEventListener('click',pauseTimer);
@@ -1395,5 +1556,51 @@ if(restored&&secondsAccrued>0&&!matchEnded){
   renderHome();
 }
 </script>
+
+<!-- Service Worker registration -->
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    // Inline service worker via blob URL
+    var swCode = `
+const CACHE = 'pitchside-v1';
+const ASSETS = [self.location.href.replace('/sw.js','/')];
+self.addEventListener('install', function(e){
+  e.waitUntil(
+    caches.open(CACHE).then(function(c){ return c.addAll(ASSETS); }).catch(function(){})
+  );
+  self.skipWaiting();
+});
+self.addEventListener('activate', function(e){
+  e.waitUntil(caches.keys().then(function(keys){
+    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));
+  }));
+  self.clients.claim();
+});
+self.addEventListener('fetch', function(e){
+  e.respondWith(
+    caches.match(e.request).then(function(cached){
+      if(cached) return cached;
+      return fetch(e.request).then(function(resp){
+        if(!resp||resp.status!==200||resp.type!=='basic') return resp;
+        var clone = resp.clone();
+        caches.open(CACHE).then(function(c){ c.put(e.request, clone); });
+        return resp;
+      }).catch(function(){ return cached; });
+    })
+  );
+});
+`;
+    var blob = new Blob([swCode], {type:'application/javascript'});
+    var swUrl = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl).then(function(reg){
+      console.log('Pitch Side SW registered');
+    }).catch(function(e){
+      console.log('SW registration failed:', e);
+    });
+  });
+}
+</script>
+
 </body>
 </html>
