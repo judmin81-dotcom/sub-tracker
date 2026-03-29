@@ -341,7 +341,10 @@ body.dark .drop-player-row.dropped{background:#2a1818}
     <div class="card">
       <div class="timer-row">
         <div>
-          <div class="timer-num" id="timer-display">0:00</div>
+          <div style="display:flex;align-items:baseline;gap:6px">
+            <div class="timer-num" id="timer-display">0:00</div>
+            <div id="added-time-display" style="font-size:20px;font-weight:700;color:#EF9F27;font-variant-numeric:tabular-nums;display:none"></div>
+          </div>
           <div class="timer-sub" id="timer-sub">Tap Start to begin</div>
         </div>
         <div class="btn-row">
@@ -427,7 +430,10 @@ body.dark .drop-player-row.dropped{background:#2a1818}
     <div class="stats-topbar">
       <button class="stats-back-btn" id="stats-back-btn">&#8592; Match</button>
       <h2>&#128202; Stats</h2>
-      <div class="stats-clock" id="stats-clock">0:00</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button id="stats-info-btn" style="width:26px;height:26px;border-radius:50%;border:none;background:rgba(255,255,255,0.2);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;flex-shrink:0">&#63;</button>
+        <div class="stats-clock" id="stats-clock">0:00</div>
+      </div>
     </div>
 
     <div class="stats-events-section">
@@ -487,7 +493,7 @@ body.dark .drop-player-row.dropped{background:#2a1818}
 
 <!-- Formation -->
 <div class="pitch-modal" id="pitch-modal">
-  <div class="pitch-topbar"><h2>&#9917; Formation</h2><span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.2);color:#fff;padding:3px 8px;border-radius:10px;letter-spacing:0.05em">BETA</span><button class="pitch-close" id="pitch-close">Done</button></div>
+  <div class="pitch-topbar"><h2>&#9917; Formation</h2><span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.2);color:#fff;padding:3px 8px;border-radius:10px;letter-spacing:0.05em">BETA</span><div style="flex:1"></div><span id="formation-clock" style="font-size:15px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;margin-right:10px">0:00</span><button class="pitch-close" id="pitch-close">Done</button></div>
   <div class="pitch-hint">Drag players to set your formation</div>
   <div class="pitch-wrap" id="pitch-wrap">
     <svg class="pitch-svg" id="pitch-svg" viewBox="0 0 300 450" preserveAspectRatio="xMidYMid meet"></svg>
@@ -530,6 +536,43 @@ body.dark .drop-player-row.dropped{background:#2a1818}
     <button class="btn btn-wide" id="opts-email" style="background:var(--bg-ga);color:var(--text-primary);text-align:left;padding:14px 16px;font-size:14px;border-radius:10px;margin-bottom:8px">&#9993;&#65039; Send via Email</button>
     <button class="btn btn-wide" id="opts-pdf" style="background:var(--bg-ga);color:var(--text-primary);text-align:left;padding:14px 16px;font-size:14px;border-radius:10px;margin-bottom:16px">&#10515; Export Match Report PDF</button>
     <button class="btn btn-gray btn-wide" id="opts-cancel">Cancel</button>
+  </div>
+</div>
+<!-- Stats info modal -->
+<div class="modal-bg" id="stats-info-modal">
+  <div class="modal">
+    <h2 style="margin-bottom:14px">&#128202; Stat Types</h2>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#1D9E75;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#127919;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Shot on target</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">Any strike that would have gone in without a save — on frame, requiring the keeper to act.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#EF9F27;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#8599;&#65039;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Shot off target</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">A genuine attempt at goal that misses the frame — wide, high, or blocked before reaching the keeper.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#185FA5;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#128273;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Key pass</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">A pass that directly creates a clear shooting opportunity — the final ball before a shot.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#E24B4A;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#128260;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Turnover</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">Giving the ball away under pressure or through a poor decision — a pass, touch or carry that loses possession.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#444441;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#128737;&#65039;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Defensive action</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">A tackle, interception, block or clearance that wins or regains possession for the team.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#8B44AA;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#9888;&#65039;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Error leading to shot</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">A mistake by a player that directly gives the opposition a shooting chance — miscontrol, mispass or misjudgement.</div></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:8px;background:#0a7abf;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">&#129408;</div>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text-primary)">Save (GK)</div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px">A stop by the goalkeeper that prevents a goal — any save that keeps the ball out of the net.</div></div>
+      </div>
+    </div>
+    <button class="btn btn-gray btn-wide" id="stats-info-close" style="margin-top:16px">Close</button>
   </div>
 </div>
 <div class="modal-bg" id="end-modal"><div class="modal"><h2>End match early?</h2><p>This will stop the timer and lock in all current times. Any players still on pitch will have their time recorded up to this minute. Are you sure?</p><button class="btn btn-dark" id="confirm-end">Yes, end match</button><button class="btn btn-gray" id="cancel-end">Cancel</button></div></div>
@@ -934,7 +977,30 @@ var statsEvents=[],pendingEvent=null,undoHideTimer=null,sortOrder='number',pitch
 var lineupAlertTimer=null,lastAlertCount=-1;
 var STAT_LABELS={shot_on:'Shot on target',shot_off:'Shot off target',key_pass:'Key pass',turnover:'Turnover',def_action:'Def. action',error:'Error \u2192 shot',save:'Save (GK)'};
 function getSeconds(){if(!running)return secondsAccrued;return secondsAccrued+Math.floor((Date.now()-startedAt)/1000);}
-function fmtDisplay(){var s=getSeconds(),e=s-halfStartSeconds,tot=halfDisplayOffset*60+e;return Math.floor(tot/60)+':'+pad(tot%60);}
+function halfCapMins(){
+  // Returns the cap in minutes for the current half
+  if(currentHalf===1) return halfMins;
+  if(currentHalf===2) return halfMins*2;
+  return halfMins*3; // ET — cap at 3x halfMins
+}
+function fmtDisplay(){
+  var s=getSeconds(),e=s-halfStartSeconds,tot=halfDisplayOffset*60+e;
+  var capMins=halfCapMins();
+  var displaySecs=Math.min(tot,capMins*60);
+  return Math.floor(displaySecs/60)+':'+pad(displaySecs%60);
+}
+function getAddedSecs(){
+  // Seconds beyond the half cap
+  var s=getSeconds(),e=s-halfStartSeconds,tot=halfDisplayOffset*60+e;
+  var capSecs=halfCapMins()*60;
+  return Math.max(0,tot-capSecs);
+}
+function fmtAddedTime(){
+  var added=getAddedSecs();
+  if(added<=0) return '';
+  var mins=Math.ceil(added/60);
+  return '+'+mins+"'";
+}
 var curMin=function(){return Math.floor(getSeconds()/60);};
 function isSentOff(p){return p.cards.some(function(c){return c.type==='R'||c.type==='Y2';});}
 function calcMins(p){var t=p.stints.reduce(function(s,st){return s+(st.off-st.on);},0);if(p.onAt!==null)t+=curMin()-p.onAt;return t;}
@@ -985,7 +1051,7 @@ function syncMatchUIFromState(){
     if(running){
       el('start-btn').style.display='none';el('pause-btn').style.display='';
       el('status-dot').className='status-dot running';el('timer-sub').textContent=halfLabel;
-      if(!ticker)ticker=setInterval(function(){el('timer-display').textContent=fmtDisplay();el('stats-clock').textContent=fmtDisplay();updateLiveMins();saveTimerTick();},500);
+      if(!ticker)ticker=setInterval(function(){var t=fmtDisplay();el('timer-display').textContent=t;var at=fmtAddedTime();var atEl=el('added-time-display');if(atEl){if(at){atEl.textContent=at;atEl.style.display='';}else{atEl.style.display='none';}}var fullT=t+(at?' '+at:'');el('stats-clock').textContent=fullT;if(el('formation-clock'))el('formation-clock').textContent=fullT;if(at&&el('half-badge'))el('half-badge').textContent=halfLabel.toUpperCase()+' '+at;else if(el('half-badge'))el('half-badge').textContent=halfLabel.toUpperCase();updateLiveMins();saveTimerTick();},500);
     }
   }
   renderPlayers();updateEventCounts();renderStatsTotals();
@@ -1019,7 +1085,7 @@ function startTimer(){
   running=true;startedAt=Date.now();
   el('start-btn').style.display='none';el('pause-btn').style.display='';
   el('status-dot').className='status-dot running';el('timer-sub').textContent=halfLabel;
-  ticker=setInterval(function(){el('timer-display').textContent=fmtDisplay();el('stats-clock').textContent=fmtDisplay();updateLiveMins();saveTimerTick();},500);
+  ticker=setInterval(function(){var t=fmtDisplay();el('timer-display').textContent=t;var at=fmtAddedTime();var atEl=el('added-time-display');if(atEl){if(at){atEl.textContent=at;atEl.style.display='';}else{atEl.style.display='none';}}var fullT=t+(at?' '+at:'');el('stats-clock').textContent=fullT;if(el('formation-clock'))el('formation-clock').textContent=fullT;if(at&&el('half-badge'))el('half-badge').textContent=halfLabel.toUpperCase()+' '+at;else if(el('half-badge'))el('half-badge').textContent=halfLabel.toUpperCase();updateLiveMins();saveTimerTick();},500);
   updateLockedRow();
   clearTimeout(lineupAlertTimer);lineupAlertTimer=setTimeout(checkLineup,10000);
   saveState();
@@ -1027,7 +1093,10 @@ function startTimer(){
 function pauseTimer(){
   secondsAccrued=getSeconds();running=false;clearInterval(ticker);ticker=null;
   el('start-btn').style.display='';el('pause-btn').style.display='none';
-  el('status-dot').className='status-dot';saveState();
+  el('status-dot').className='status-dot';
+  // Update added time display on pause
+  var at=fmtAddedTime();var atEl=el('added-time-display');if(atEl){if(at){atEl.textContent=at;atEl.style.display='';}else atEl.style.display='none';}
+  saveState();
 }
 function endMatch(){
   vibe([80,60,80,60,200]);pauseTimer();matchEnded=true;
@@ -1140,8 +1209,8 @@ function getMatchMeta(){return{gw:el('gw-number').value||'?',opp:el('match-name'
 
 // ── Stats screen ───────────────────────────────────────────────────────────
 var statsOpen=false;
-function openStatsPanel(){statsOpen=true;el('swipe-container').classList.add('stats-open');el('stats-clock').textContent=fmtDisplay();renderStatsPanel();}
-function closeStatsPanel(){statsOpen=false;el('swipe-container').classList.remove('stats-open');clearPendingEvent();}
+function openStatsPanel(){statsOpen=true;el('swipe-container').classList.add('stats-open');el('stats-clock').textContent=fmtDisplay();renderStatsPanel();el('pane-stats').scrollTop=0;}
+function closeStatsPanel(){statsOpen=false;el('swipe-container').classList.remove('stats-open');clearPendingEvent();el('pane-main').scrollTop=0;}
 function selectStatEvent(type){if(pendingEvent===type){clearPendingEvent();return;}pendingEvent=type;document.querySelectorAll('.stat-evt-btn').forEach(function(b){b.classList.toggle('active-evt',b.dataset.evt===type);});el('stats-player-grid-label').textContent='Who? \u2014 '+STAT_LABELS[type];el('stats-player-grid-wrap').classList.add('visible');renderStatsPlayerGrid();vibe(20);}
 function clearPendingEvent(){pendingEvent=null;document.querySelectorAll('.stat-evt-btn').forEach(function(b){b.classList.remove('active-evt');});el('stats-player-grid-wrap').classList.remove('visible');}
 function renderStatsPlayerGrid(){var grid=el('stats-player-grid');if(!grid)return;grid.innerHTML='';var on=players.filter(function(p){return p.onAt!==null&&!isSentOff(p);});if(!on.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);font-size:12px;padding:12px">No players currently on pitch</div>';return;}on.forEach(function(p){var ri=players.indexOf(p);var btn=document.createElement('button');btn.className='stats-player-btn';btn.innerHTML='<div class="sp-num">'+p.number+'</div><div class="sp-name">'+(p.name||'P'+p.number)+'</div>';(function(ii){btn.addEventListener('click',function(){assignStatEvent(ii);});}(ri));grid.appendChild(btn);});}
@@ -1157,7 +1226,7 @@ function renderStatsPanel(){updateEventCounts();renderStatsPlayerGrid();renderSt
 function showExport(){
   var m=getMatchMeta();var out='GW'+m.gw+' vs '+m.opp+'\n';
   if(matchTeamName)out+='Team: '+matchTeamName+'\n';if(matchKickoff)out+='Kick-off: '+matchKickoff+'\n';var condStr=conditionsLabel(matchWeather,matchTemp);if(condStr)out+='Conditions: '+condStr+'\n';if(matchVenue)out+='Venue: '+matchVenue+'\n';if(matchNotes)out+='Notes: '+matchNotes+'\n';
-  out+='Half: '+halfMins+' mins | Time: '+fmtTime(getSeconds())+' | '+halfLabel+(matchEnded?' (ENDED EARLY)':'')+'\n';
+  out+='Half: '+halfMins+' mins | Time: '+fmtTime(getSeconds())+' | '+halfLabel+(matchEnded&&getSeconds()<halfMins*2*60?' (ENDED EARLY)':'')+'\n';
   out+=Array(63).join('\u2500')+'\n #  Name              Stints                Mins  Events\n'+Array(63).join('\u2500')+'\n';
   players.forEach(function(p){var name=(p.name||'Player '+p.number).slice(0,16);while(name.length<16)name+=' ';var allS=p.stints.map(function(s){return s.on+'\u2192'+s.off;});if(p.onAt!==null)allS.push(p.onAt+'\u2192now');var stints=(allS.join(', ')||'\u2014').slice(0,20);while(stints.length<20)stints+=' ';var mins=('    '+(calcMins(p)||'\u2014')).slice(-4);var evts=[];if(p.dnp)evts.push('DNP');if(p.injured)evts.push('INJ@'+p.injuredAt+"'");p.cards.forEach(function(c){if(c.type==='Y')evts.push('YC@'+c.min+"'");if(c.type==='Y2')evts.push('2YC(R)@'+c.min+"'");if(c.type==='R')evts.push('RC@'+c.min+"'");});out+=('  '+p.number).slice(-2)+'  '+name+'  '+stints+'  '+mins+'  '+evts.join(' ')+'\n';});
   if(statsEvents.length>0){out+='\n'+Array(63).join('\u2500')+'\nSTATS\n'+Array(63).join('\u2500')+'\n';var types=Object.keys(STAT_LABELS);var sl2={shot_on:'SoT',shot_off:'SoF',key_pass:'KP',turnover:'TO',def_action:'DA',error:'ERR',save:'SV'};var seen=[];statsEvents.forEach(function(e){if(seen.indexOf(e.playerIdx)===-1)seen.push(e.playerIdx);});seen.forEach(function(idx){var p=players[idx];if(!p)return;var name=(p.name||'Player '+p.number).slice(0,16);while(name.length<16)name+=' ';var cnts=types.map(function(t){var c=statsEvents.filter(function(e){return e.playerIdx===idx&&e.type===t;}).length;return c>0?(sl2[t]+':'+c):null;}).filter(Boolean);out+='    '+name+'  '+cnts.join('  ')+'\n';});}
@@ -1168,18 +1237,18 @@ function csvEsc(v){var s=String(v==null?'':v);return(s.indexOf(',')>=0||s.indexO
 function _buildCSV(ps,se,gwv,oppv,te,me,tn,wv,tv,vv,kv){
   var rows=[['Team','Kick-off','Number','Name','Stints','Total Mins','Goals','Assists','Injured','Injury Min','Yellow Card Min','2nd Yellow Min','Straight Red Min','Shots On Target','Shots Off Target','Key Passes','Turnovers','Def Actions','Errors Leading to Shot','Saves']];
   ps.forEach(function(p){var allS=p.stints.map(function(s){return s.on+'-'+s.off;});if(p.onAt!==null)allS.push(p.onAt+'-now');var idx=ps.indexOf(p);function sc(type){return se.filter(function(e){return e.playerIdx===idx&&e.type===type;}).length;}rows.push([tn||'',kv||'',p.number,p.name||'Player '+p.number,allS.join(' | ')||'',calcMins(p)||0,p.goals,p.assists,p.injured?'Y':'',p.injured&&p.injuredAt!==null?p.injuredAt:'',p.cards.filter(function(c){return c.type==='Y';}).map(function(c){return c.min;}).join(' '),p.cards.filter(function(c){return c.type==='Y2';}).map(function(c){return c.min;}).join(' '),p.cards.filter(function(c){return c.type==='R';}).map(function(c){return c.min;}).join(' '),sc('shot_on'),sc('shot_off'),sc('key_pass'),sc('turnover'),sc('def_action'),sc('error'),sc('save')]);});
-  rows.push([]);rows.push(['GW'+gwv+' vs '+oppv,'Team: '+(tn||'—'),'Kick-off: '+(kv||'—'),'Conditions: '+conditionsLabel(wv,tv),'Venue: '+(vv||'—'),'Time: '+fmtTime(te),(me?' (ENDED EARLY)':'')]);
+  rows.push([]);rows.push(['GW'+gwv+' vs '+oppv,'Team: '+(tn||'—'),'Kick-off: '+(kv||'—'),'Conditions: '+conditionsLabel(wv,tv),'Venue: '+(vv||'—'),'Time: '+fmtTime(te),(me&&te<hm*2*60?' (ENDED EARLY)':'')]);
   return rows.map(function(r){return r.map(csvEsc).join(',');}).join('\n');
 }
 function downloadCSV(){var m=getMatchMeta();var csv=_buildCSV(players,statsEvents,m.gw,m.opp,getSeconds(),matchEnded,matchTeamName,matchWeather,matchTemp,matchVenue,matchKickoff);var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='GW'+m.gw+'_'+(m.opp.replace(/[^a-zA-Z0-9]/g,'_')||'match')+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
-function sendEmail(){var m=getMatchMeta();var sub='GW'+m.gw+' vs '+m.opp+' \u2014 Player Minutes';var w=22,div=Array(w+10).join('\u2500');var lines=['GW'+m.gw+' vs '+m.opp];if(matchTeamName)lines.push('Team: '+matchTeamName);if(matchKickoff)lines.push('Kick-off: '+matchKickoff);var emailCond=conditionsLabel(matchWeather,matchTemp);if(emailCond)lines.push('Conditions: '+emailCond);if(matchVenue)lines.push('Venue: '+matchVenue);if(matchNotes)lines.push('Notes: '+matchNotes);lines.push('Score: '+scoreUs+' \u2013 '+scoreThem,'Time played: '+fmtTime(getSeconds())+(matchEnded?' (match ended early)':''),'',div,('Player'+Array(w+1).join(' ')).slice(0,w)+'  Mins',div);players.forEach(function(p){var mins=calcMins(p);if(mins>0||p.stints.length>0||p.onAt!==null){var name=(p.name||'Player '+p.number+Array(w+1).join(' ')).slice(0,w);lines.push(name+'  '+(mins>0?mins:'\u2014'));}});lines.push(div);window.location.href='mailto:?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(lines.join('\n'));}
+function sendEmail(){var m=getMatchMeta();var sub='GW'+m.gw+' vs '+m.opp+' \u2014 Player Minutes';var w=22,div=Array(w+10).join('\u2500');var lines=['GW'+m.gw+' vs '+m.opp];if(matchTeamName)lines.push('Team: '+matchTeamName);if(matchKickoff)lines.push('Kick-off: '+matchKickoff);if(matchVenue)lines.push('Venue: '+matchVenue);if(matchNotes)lines.push('Notes: '+matchNotes);lines.push('Score: '+scoreUs+' \u2013 '+scoreThem,'Time played: '+fmtTime(getSeconds())+(matchEnded&&getSeconds()<halfMins*2*60?' (match ended early)':''),'',div,('Player'+Array(w+1).join(' ')).slice(0,w)+'  Mins',div);players.forEach(function(p){var mins=calcMins(p);if(mins>0||p.stints.length>0||p.onAt!==null){var name=(p.name||'Player '+p.number+Array(w+1).join(' ')).slice(0,w);lines.push(name+'  '+(mins>0?mins:'\u2014'));}});lines.push(div);window.location.href='mailto:?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(lines.join('\n'));}
 
 function _exportPDF(ps,se,gwv,oppv,su,st,te,gs,hm,me,tn,wv,tv,kv,nv){
   var jsPDF=window.jspdf?window.jspdf.jsPDF:(window.jsPDF||(window.jspdf&&window.jspdf.jsPDF));if(!jsPDF){alert('PDF library not loaded.');return;}
   var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});var W=210,H=297,margin=14,colW=W-margin*2;
   doc.setFillColor(15,110,86);doc.rect(0,0,W,38,'F');doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(255,255,255);doc.text('MATCH REPORT',margin,16);
   doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(180,230,210);doc.text('GW'+gwv+'  \u2022  vs '+(oppv||'Unknown')+(tn?'  \u2022  '+tn:''),margin,24);
-  var now=new Date();var ds=now.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'});var pdfCond=conditionsLabel(wv,tv);doc.text(ds+(kv?'  \u2022  \u23f1 '+kv:'')+'  \u2022  '+fmtTime(te)+' played'+(me?'  \u2022  Ended early':'')+(pdfCond?'  \u2022  '+pdfCond:''),margin,31);
+  var now=new Date();var ds=now.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'});var pdfCond=conditionsLabel(wv,tv);doc.text(ds+(kv?'  \u2022  \u23f1 '+kv:'')+'  \u2022  '+fmtTime(te)+' played'+(me&&te<hm*2*60?'  \u2022  Ended early':'')+(pdfCond?'  \u2022  '+pdfCond:''),margin,31);
   var sct=su+' \u2013 '+st;doc.setFont('helvetica','bold');doc.setFontSize(26);doc.setTextColor(255,255,255);doc.text(sct,W-margin-doc.getTextWidth(sct),20);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(180,230,210);doc.text('US  \u2013  THEM',W-margin-doc.getTextWidth('US  \u2013  THEM'),27);
   var py=48;var pills=[{label:'Format',val:gs+'-a-side'},{label:'Half',val:hm+' mins'},{label:'Goals',val:String(ps.reduce(function(s,p){return s+p.goals;},0))},{label:'Assists',val:String(ps.reduce(function(s,p){return s+p.assists;},0))}];var pw=(colW-6)/4;pills.forEach(function(pill,idx){var px=margin+idx*(pw+2);doc.setFillColor(232,247,241);doc.roundedRect(px,py-6,pw,14,2,2,'F');doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(15,110,86);doc.text(pill.val,px+pw/2-doc.getTextWidth(pill.val)/2,py+2);doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,150,130);doc.text(pill.label.toUpperCase(),px+pw/2-doc.getTextWidth(pill.label)/2,py+7);});
   var ty=72;var cols=[{title:'#',x:margin},{title:'Player',x:margin+8},{title:'Mins',x:margin+52},{title:'G',x:margin+66},{title:'A',x:margin+76},{title:'SoT',x:margin+86},{title:'SoF',x:margin+98},{title:'KP',x:margin+110},{title:'TO',x:margin+121},{title:'DA',x:margin+132},{title:'ERR',x:margin+143},{title:'SV',x:margin+154},{title:'Events',x:margin+164}];
@@ -1217,7 +1286,7 @@ function drawPitch(){
     }(idx,g,sh,ci,nt,nb,nm));
   });
 }
-function openFormation(){el('pitch-modal').classList.add('open');drawPitch();}
+function openFormation(){el('pitch-modal').classList.add('open');if(el('formation-clock'))el('formation-clock').textContent=fmtDisplay();drawPitch();}
 function closeFormation(){el('pitch-modal').classList.remove('open');}
 function showSubPicker(outIdx){var bench=players.filter(function(p){return p.onAt===null&&!isSentOff(p)&&!p.injured&&!p.dnp&&p.stints.length===0;});if(!bench.length){hideSubPicker();return;}var op=players[outIdx];el('sub-picker-out').innerHTML='Subbing off: <strong>'+(op.name||'Player '+op.number)+'</strong>';var list=el('sub-picker-list');list.innerHTML='';bench.forEach(function(p){var btn=document.createElement('button');btn.className='sub-picker-btn';btn.innerHTML='<div class="sub-picker-num">'+p.number+'</div>'+(p.name||'Player '+p.number);(function(ii){btn.addEventListener('click',function(){subOff(outIdx);subOn(ii);hideSubPicker();drawPitch();});}(players.indexOf(p)));list.appendChild(btn);});el('sub-picker').classList.add('open');}
 function hideSubPicker(){el('sub-picker').classList.remove('open');}
@@ -1334,7 +1403,7 @@ function openSubOffForOnPicker(comingOnIdx) {
 
 
 // ── Persist ────────────────────────────────────────────────────────────────
-function saveState(){try{localStorage.setItem('subtracker_state',JSON.stringify({secondsAccrued:secondsAccrued,running:false,matchEnded:matchEnded,halfMins:halfMins,currentHalf:currentHalf,halfLabel:halfLabel,halfStartSeconds:halfStartSeconds,halfDisplayOffset:halfDisplayOffset,squadSize:squadSize,gameStyle:gameStyle,scoreUs:scoreUs,scoreThem:scoreThem,gw:el('gw-number').value,opp:el('match-name').value,matchTeamId:matchTeamId,matchTeamName:matchTeamName,matchWeather:matchWeather,matchTemp:matchTemp,matchVenue:matchVenue,matchKickoff:matchKickoff,matchNotes:matchNotes,matchStatsEnabled:matchStatsEnabled,players:players,statsEvents:statsEvents}));}catch(e){}}
+function saveState(){try{localStorage.setItem('subtracker_state',JSON.stringify({secondsAccrued:getSeconds(),wasRunning:running,matchEnded:matchEnded,halfMins:halfMins,currentHalf:currentHalf,halfLabel:halfLabel,halfStartSeconds:halfStartSeconds,halfDisplayOffset:halfDisplayOffset,squadSize:squadSize,gameStyle:gameStyle,scoreUs:scoreUs,scoreThem:scoreThem,gw:el('gw-number').value,opp:el('match-name').value,matchTeamId:matchTeamId,matchTeamName:matchTeamName,matchWeather:matchWeather,matchTemp:matchTemp,matchVenue:matchVenue,matchKickoff:matchKickoff,matchNotes:matchNotes,matchStatsEnabled:matchStatsEnabled,players:players,statsEvents:statsEvents}));}catch(e){}}
 function getSavedState(){try{return JSON.parse(localStorage.getItem('subtracker_state')||'null');}catch(e){return null;}}
 function saveTimerTick(){try{var s=JSON.parse(localStorage.getItem('subtracker_state')||'{}');s.secondsAccrued=getSeconds();localStorage.setItem('subtracker_state',JSON.stringify(s));}catch(e){}}
 function restoreState(){
@@ -1537,11 +1606,30 @@ document.querySelectorAll('.stat-evt-btn').forEach(function(btn){btn.addEventLis
 el('stats-player-grid-cancel').addEventListener('click',clearPendingEvent);
 el('stats-undo-btn').addEventListener('click',undoLastStatEvent);
 el('stats-back-btn').addEventListener('click',closeStatsPanel);
+el('stats-info-btn').addEventListener('click',function(){openModal('stats-info-modal');});
+el('stats-info-close').addEventListener('click',function(){closeModal('stats-info-modal');});
 el('swipe-hint').addEventListener('click',openStatsPanel);
 // Home button on match screen
 var hmBtn=document.createElement('button');hmBtn.id='match-home-btn';hmBtn.className='score-btn';hmBtn.style.cssText='width:auto;padding:4px 8px;font-size:14px;border-radius:6px;display:none';hmBtn.innerHTML='&#127968;';hmBtn.addEventListener('click',function(){if(running||(getSeconds()>0&&!matchEnded)){if(!confirm('Return to home? Match is saved and can be resumed.'))return;pauseTimer();}renderHome();});
 // Insert home button into topbar left side — already in HTML
 if(el('match-home-btn'))el('match-home-btn').addEventListener('click',function(){if(running||(getSeconds()>0&&!matchEnded)){if(!confirm('Return to home? Match is saved and can be resumed.'))return;pauseTimer();}renderHome();});
+
+// Resume timer when screen unlocks / tab becomes visible again
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible' && !matchEnded) {
+    var savedState = getSavedState();
+    if (savedState && savedState.wasRunning && !running) {
+      // Timer was running before screen locked — resume it
+      secondsAccrued = savedState.secondsAccrued || secondsAccrued;
+      startTimer();
+      showToast('Timer resumed', 1800);
+    }
+  } else if (document.visibilityState === 'hidden' && running) {
+    // Screen locking — save current seconds so we can resume accurately
+    saveState();
+  }
+});
+
 window.addEventListener('beforeunload',function(e){if(running||(getSeconds()>0&&!matchEnded)){e.preventDefault();e.returnValue='Match in progress';return e.returnValue;}});
 
 // ── Init ───────────────────────────────────────────────────────────────────
@@ -1550,6 +1638,12 @@ var restored=restoreState();
 if(restored&&secondsAccrued>0&&!matchEnded){
   // Match in progress — go straight to match screen
   syncMatchUIFromState();showMatchScreen();
+  // Auto-resume timer if it was running when the page was suspended
+  var savedState=getSavedState();
+  if(savedState&&savedState.wasRunning){
+    startTimer();
+    showToast('Timer resumed',1800);
+  }
 } else {
   // No active match — show home
   if(!restored){initPlayers(false);applyLineupIfFresh();}
@@ -1557,50 +1651,7 @@ if(restored&&secondsAccrued>0&&!matchEnded){
 }
 </script>
 
-<!-- Service Worker registration -->
-<script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){
-    // Inline service worker via blob URL
-    var swCode = `
-const CACHE = 'pitchside-v1';
-const ASSETS = [self.location.href.replace('/sw.js','/')];
-self.addEventListener('install', function(e){
-  e.waitUntil(
-    caches.open(CACHE).then(function(c){ return c.addAll(ASSETS); }).catch(function(){})
-  );
-  self.skipWaiting();
-});
-self.addEventListener('activate', function(e){
-  e.waitUntil(caches.keys().then(function(keys){
-    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));
-  }));
-  self.clients.claim();
-});
-self.addEventListener('fetch', function(e){
-  e.respondWith(
-    caches.match(e.request).then(function(cached){
-      if(cached) return cached;
-      return fetch(e.request).then(function(resp){
-        if(!resp||resp.status!==200||resp.type!=='basic') return resp;
-        var clone = resp.clone();
-        caches.open(CACHE).then(function(c){ c.put(e.request, clone); });
-        return resp;
-      }).catch(function(){ return cached; });
-    })
-  );
-});
-`;
-    var blob = new Blob([swCode], {type:'application/javascript'});
-    var swUrl = URL.createObjectURL(blob);
-    navigator.serviceWorker.register(swUrl).then(function(reg){
-      console.log('Pitch Side SW registered');
-    }).catch(function(e){
-      console.log('SW registration failed:', e);
-    });
-  });
-}
-</script>
+<!-- Service Worker disabled: blob URL not supported in this browser environment -->
 
 </body>
 </html>
