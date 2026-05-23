@@ -124,13 +124,13 @@ h1{font-size:17px;font-weight:600;color:#fff}
 .player-card.injured{border-color:#EF9F27;background:var(--bg-tag-i)}
 .player-card.sent-off{border-color:#E24B4A;background:var(--bg-tag-r)}
 .player-top{display:flex;align-items:center;padding:10px 12px;gap:8px}
-.player-num{width:28px;height:28px;border-radius:50%;background:var(--green-light);color:var(--green-text);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.player-num{width:34px;height:28px;border-radius:14px;background:var(--green-light);color:var(--green-text);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .player-num.on{background:var(--green-mid);color:#fff}
 .player-num.injured-num{background:#EF9F27;color:#fff}
 .player-num.sentoff-num{background:#E24B4A;color:#fff}
 .player-name-input{flex:1;border:none;font-size:14px;font-weight:500;color:var(--text-name);font-family:inherit;background:transparent;outline:none;min-width:0}
 .player-name-input::placeholder{color:var(--text-placeholder)}
-.player-num-input{width:28px;height:28px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;border:none;outline:none;cursor:text;font-family:inherit;padding:0;-webkit-appearance:none;flex-shrink:0}
+.player-num-input{width:34px;height:28px;border-radius:14px;font-size:11px;font-weight:700;text-align:center;border:none;outline:none;cursor:text;font-family:inherit;padding:0;-webkit-appearance:none;flex-shrink:0}
 .player-num-input.on{background:#0F6E56;color:#fff}  
 .player-num-input.injured-num{background:#EF9F27;color:#fff}
 .player-num-input.sentoff-num{background:#E24B4A;color:#fff}
@@ -286,7 +286,42 @@ h1{font-size:17px;font-weight:600;color:#fff}
 .main-sub-sheet-cancel{margin-top:8px;width:100%;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--bg-icon);color:var(--text-btn-gray);-webkit-appearance:none}
 .main-sub-sheet-cancel:active{opacity:0.7}
 
-/* Time override */
+/* ── Hamburger menu ──────────────────────────────────────────────────────────── */
+.hamburger{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;flex-shrink:0;-webkit-appearance:none}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all 0.25s ease}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200}
+.drawer-overlay.open{display:block}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:285px;background:var(--bg-card);z-index:201;transform:translateX(-100%);transition:transform 0.28s ease;display:flex;flex-direction:column;overflow-y:auto}
+.drawer.open{transform:translateX(0)}
+.drawer-header{background:var(--topbar-bg);padding:16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.drawer-header h2{font-size:16px;font-weight:700;color:#fff;margin:0}
+.drawer-section{padding:14px 16px 4px;border-top:1px solid var(--border)}
+.drawer-section:first-of-type{border-top:none}
+.drawer-section-label{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px}
+.drawer-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;gap:10px}
+.drawer-row label{font-size:13px;font-weight:500;color:var(--text-primary);flex-shrink:0}
+.drawer-row input[type=number],.drawer-row select{padding:6px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;color:var(--text-input);font-family:inherit;background:var(--bg-input);-webkit-appearance:none;min-width:0}
+.drawer-row input[type=number]{width:64px;text-align:center}
+.drawer-row select{flex:1;max-width:140px}
+.drawer-btn{width:100%;border:none;border-radius:9px;padding:11px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:10px;margin-bottom:7px;-webkit-appearance:none}
+.drawer-btn:active{opacity:0.7}
+.drawer-btn-green{background:var(--green-light);color:var(--green-text)}
+.drawer-btn-gray{background:var(--bg-icon);color:var(--text-btn-gray)}
+.drawer-btn-red{background:var(--bg-tag-r);color:#E24B4A}
+.drawer-btn-blue{background:#0d2240;color:#5fa8e8}
+.drawer-btn-purple{background:#1e1040;color:#a78bfa}
+.drawer-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+.drawer-toggle-label{font-size:13px;font-weight:500;color:var(--text-primary)}
+.toggle-switch{position:relative;width:44px;height:26px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:13px;cursor:pointer;transition:background 0.2s}
+.toggle-slider:before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.toggle-switch input:checked + .toggle-slider{background:#1D9E75}
+.toggle-switch input:checked + .toggle-slider:before{transform:translateX(18px)}
 .timer-num{cursor:pointer}
 .timer-num:active{opacity:0.7}
 .timer-edit-hint{font-size:10px;color:var(--text-muted);margin-top:1px;letter-spacing:0.02em}
@@ -312,13 +347,14 @@ h1{font-size:17px;font-weight:600;color:#fff}
 <body>
 
 <div class="topbar">
-  <div style="display:flex;align-items:center;gap:8px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <div class="status-dot" id="status-dot"></div>
-    <h1>Sub Tracker</h1>
-    <button class="dark-toggle" id="dark-toggle" title="Toggle dark mode">☀️</button>
+    <h1>Pitch Side</h1>
   </div>
   <div style="display:flex;align-items:center;gap:6px">
-    <button class="score-btn" id="btn-history" title="Match history" style="width:auto;padding:4px 10px;font-size:11px;font-weight:700;letter-spacing:0.03em;border-radius:6px">&#128196; History</button>
     <div class="score-wrap">
     <div>
       <div class="score-display">
@@ -365,28 +401,6 @@ h1{font-size:17px;font-weight:600;color:#fff}
     <button class="half-btn" id="btn-et" data-half="3" data-label="Extra Time">Extra Time</button>
   </div>
   <div class="settings-row">
-    <label>Half (mins):</label>
-    <input type="number" id="half-length" value="40" min="1" max="90">
-    <label>Format:</label>
-    <select id="game-style">
-      <option value="4">4-a-side</option>
-      <option value="5">5-a-side</option>
-      <option value="6">6-a-side</option>
-      <option value="7">7-a-side</option>
-      <option value="8">8-a-side</option>
-      <option value="9">9-a-side</option>
-      <option value="10">10-a-side</option>
-      <option value="11" selected>11-a-side</option>
-    </select>
-    <label>Squad:</label>
-    <select id="squad-size">
-      <option>5</option><option>6</option><option>7</option><option>8</option>
-      <option>9</option><option>10</option><option>11</option><option>12</option>
-      <option>13</option><option>14</option><option>15</option><option selected>16</option>
-      <option>17</option><option>18</option><option>19</option><option>20</option>
-    </select>
-  </div>
-  <div class="settings-row">
     <label>GW:</label>
     <input type="number" id="gw-number" value="1" min="1" max="30" style="width:44px">
     <label>vs:</label>
@@ -415,16 +429,79 @@ h1{font-size:17px;font-weight:600;color:#fff}
 <div id="player-list"></div>
 
 <div class="bottom-btns">
-  <div style="display:flex;gap:8px">
-    <button class="btn btn-green btn-wide" id="btn-save-lineup" style="flex:1">&#10003; Save lineup</button>
-    <button class="btn btn-gray btn-wide" id="btn-load-lineup" style="flex:1">&#8617; Load lineup</button>
-    <button class="btn btn-red btn-wide" id="btn-clear-lineup" style="flex:1;padding:12px 6px;font-size:12px">&#x2715; Clear saved</button>
-  </div>
   <button class="btn btn-wide" id="btn-save-match" style="background:linear-gradient(135deg,#185FA5,#2d7fd4);color:#fff;font-size:14px;display:none">&#128190; Save Match Result</button>
   <button class="btn btn-blue btn-wide" id="btn-export">View / Copy match data</button>
   <button class="btn btn-green btn-wide" id="btn-csv">Download CSV</button>
   <button class="btn btn-orange btn-wide" id="btn-email">Send via Email</button>
   <button class="btn btn-wide" id="btn-pdf" style="background:linear-gradient(135deg,#0F6E56,#1D9E75);color:#fff;font-size:15px;letter-spacing:0.02em">&#x2913; Export Match Report PDF</button>
+</div>
+
+<!-- Hamburger drawer -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <button class="hamburger open" id="drawer-close-btn" aria-label="Close menu">
+      <span></span><span></span><span></span>
+    </button>
+    <h2>Settings</h2>
+  </div>
+
+  <!-- Match settings -->
+  <div class="drawer-section">
+    <div class="drawer-section-label">Match settings</div>
+    <div class="drawer-row">
+      <label>Half length (mins)</label>
+      <input type="number" id="half-length" value="40" min="1" max="90">
+    </div>
+    <div class="drawer-row">
+      <label>Format</label>
+      <select id="game-style">
+        <option value="4">4-a-side</option>
+        <option value="5">5-a-side</option>
+        <option value="6">6-a-side</option>
+        <option value="7">7-a-side</option>
+        <option value="8">8-a-side</option>
+        <option value="9">9-a-side</option>
+        <option value="10">10-a-side</option>
+        <option value="11" selected>11-a-side</option>
+      </select>
+    </div>
+    <div class="drawer-row">
+      <label>Squad size</label>
+      <select id="squad-size">
+        <option>5</option><option>6</option><option>7</option><option>8</option>
+        <option>9</option><option>10</option><option>11</option><option>12</option>
+        <option>13</option><option>14</option><option>15</option><option selected>16</option>
+        <option>17</option><option>18</option><option>19</option><option>20</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Appearance -->
+  <div class="drawer-section">
+    <div class="drawer-section-label">Appearance</div>
+    <div class="drawer-toggle-row">
+      <span class="drawer-toggle-label">Dark mode</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="dark-toggle">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Lineup -->
+  <div class="drawer-section">
+    <div class="drawer-section-label">Lineup</div>
+    <button class="drawer-btn drawer-btn-green" id="btn-save-lineup">&#10003; Save lineup</button>
+    <button class="drawer-btn drawer-btn-gray" id="btn-load-lineup">&#8617; Load lineup</button>
+    <button class="drawer-btn drawer-btn-red" id="btn-clear-lineup">&#x2715; Clear saved lineup</button>
+  </div>
+
+  <!-- History -->
+  <div class="drawer-section">
+    <div class="drawer-section-label">Match history</div>
+    <button class="drawer-btn drawer-btn-blue" id="btn-history">&#128196; View match history</button>
+  </div>
 </div>
 
 <!-- Main-view sub sheet -->
@@ -697,6 +774,8 @@ function resetMatch() {
   el('end-btn').disabled = false;
   el('end-btn').style.opacity = '';
   el('btn-save-match').style.display = 'none';
+  var currentGw = parseInt(el('gw-number').value) || 1;
+  el('gw-number').value = currentGw + 1;
   initPlayers(true);
   applyLineupIfFresh();
   setHalf(1, '1st Half');
@@ -1158,7 +1237,7 @@ function renderPlayers() {
     var numInput = document.createElement('input');
     numInput.type = 'text';
     numInput.inputMode = 'numeric';
-    numInput.maxLength = 2;
+    numInput.maxLength = 3;
     numInput.value = p.number;
     var numCls = 'player-num-input';
     if (sentOff)        numCls += ' sentoff-num';
@@ -2430,13 +2509,30 @@ var darkMode = false;
 function applyDark(on) {
   darkMode = on;
   document.body.classList.toggle('dark', on);
-  el('dark-toggle').textContent = on ? '🌙' : '☀️';
+  var toggle = el('dark-toggle');
+  if (toggle) toggle.checked = on;
   try { localStorage.setItem('subtracker_dark', on ? '1' : '0'); } catch(e) {}
 }
 
 function toggleDark() { applyDark(!darkMode); }
 
+// ── Hamburger drawer ──────────────────────────────────────────────────────────
+function openDrawer() {
+  el('drawer').classList.add('open');
+  el('drawer-overlay').classList.add('open');
+  el('hamburger-btn').classList.add('open');
+}
+
+function closeDrawer() {
+  el('drawer').classList.remove('open');
+  el('drawer-overlay').classList.remove('open');
+  el('hamburger-btn').classList.remove('open');
+}
+
 // ── Wire up static buttons ────────────────────────────────────────────────────
+el('hamburger-btn').addEventListener('click', openDrawer);
+el('drawer-close-btn').addEventListener('click', closeDrawer);
+el('drawer-overlay').addEventListener('click', closeDrawer);
 el('start-btn').addEventListener('click', startTimer);
 el('pause-btn').addEventListener('click', pauseTimer);
 el('end-btn').addEventListener('click', function() { openModal('end-modal'); });
@@ -2461,6 +2557,7 @@ el('btn-csv').addEventListener('click', downloadCSV);
 el('btn-email').addEventListener('click', sendEmail);
 el('btn-save-match').addEventListener('click', saveMatchResult);
 el('btn-history').addEventListener('click', function() {
+  closeDrawer();
   if (running || (getSeconds() > 0 && !matchEnded)) {
     if (!confirm('A match is in progress. Opening history will not affect your current match. Continue?')) return;
   }
@@ -2471,8 +2568,8 @@ el('detail-back').addEventListener('click', function() {
   el('match-detail').classList.remove('open');
   el('history-list').style.display = '';
 });
-el('btn-save-lineup').addEventListener('click', saveLineup);
-el('btn-load-lineup').addEventListener('click', loadLineup);
+el('btn-save-lineup').addEventListener('click', function() { saveLineup(); closeDrawer(); });
+el('btn-load-lineup').addEventListener('click', function() { loadLineup(); closeDrawer(); });
 el('btn-clear-lineup').addEventListener('click', clearLineup);
 el('btn-formation').addEventListener('click', openFormation);
 el('pitch-close').addEventListener('click', closeFormation);
@@ -2487,7 +2584,7 @@ el('opp-plus').addEventListener('click', function() { changeOppScore(1); });
 el('opp-minus').addEventListener('click', function() { changeOppScore(-1); });
 el('gw-number').addEventListener('change', saveState);
 el('match-name').addEventListener('input', saveState);
-el('dark-toggle').addEventListener('click', toggleDark);
+el('dark-toggle').addEventListener('change', function() { applyDark(this.checked); });
 el('game-style').addEventListener('change', function() {
   gameStyle = parseInt(this.value);
   saveState();
