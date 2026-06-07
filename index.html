@@ -554,8 +554,8 @@ h1{font-size:17px;font-weight:600;color:#fff}
 <!-- End modal -->
 <div class="modal-bg" id="end-modal">
   <div class="modal">
-    <h2>End match early?</h2>
-    <p>This will stop the timer and lock in all current times. Any players still on pitch will have their time recorded up to this minute. Are you sure?</p>
+    <h2 id="end-modal-title">End match?</h2>
+    <p id="end-modal-body">This will stop the timer and lock in all current times. Any players still on pitch will have their time recorded up to this minute. Are you sure?</p>
     <button class="btn btn-dark" id="confirm-end">Yes, end match</button>
     <button class="btn btn-gray" id="cancel-end">Cancel</button>
   </div>
@@ -748,6 +748,9 @@ function endMatch() {
   });
   el('status-dot').className = 'status-dot ended';
   el('timer-sub').textContent = 'Match ended at ' + fmtTime(getSeconds());
+  var fullTimeSecs = halfMins * 2 * 60;
+  var endedEarly = getSeconds() < fullTimeSecs - 30; // 30s grace for added time display lag
+  el('ended-banner').textContent = endedEarly ? 'Match ended early' : 'Full time';
   el('ended-banner').className = 'ended-banner show';
   el('end-btn').disabled = true;
   el('end-btn').style.opacity = '0.4';
@@ -934,10 +937,14 @@ function confirmMainSub(outIdx, inIdx) {
   hideMainSubSheet();
   var min = curMin();
   var pOut = players[outIdx];
-  pOut.stints.push({ on: pOut.onAt, off: min, half: pOut.onHalf });
+  // Only record a stint if the match has actually started
+  if (running || getSeconds() > 0) {
+    pOut.stints.push({ on: pOut.onAt, off: min, half: pOut.onHalf });
+  }
   pOut.onAt = null; pOut.onHalf = null;
   var pIn = players[inIdx];
-  pIn.onAt = min; pIn.onHalf = currentHalf;
+  pIn.onAt = running || getSeconds() > 0 ? min : 0;
+  pIn.onHalf = currentHalf;
   vibe([40, 30, 40, 30, 60]);
   clearTimeout(lineupAlertTimer);
   lineupAlertTimer = setTimeout(checkLineup, 10000);
@@ -945,7 +952,6 @@ function confirmMainSub(outIdx, inIdx) {
 }
 
 function subOffOnly() {
-  // "Sub off only" OR "Sub on only" — single-sided action, no swap
   var idx = (mainSubOutIdx !== null) ? mainSubOutIdx : mainSubInIdx;
   if (idx === null) return;
   var isOff = mainSubOutIdx !== null;
@@ -953,10 +959,13 @@ function subOffOnly() {
   var p = players[idx];
   var min = curMin();
   if (isOff) {
-    p.stints.push({ on: p.onAt, off: min, half: p.onHalf });
+    if (running || getSeconds() > 0) {
+      p.stints.push({ on: p.onAt, off: min, half: p.onHalf });
+    }
     p.onAt = null; p.onHalf = null;
   } else {
-    p.onAt = min; p.onHalf = currentHalf;
+    p.onAt = running || getSeconds() > 0 ? min : 0;
+    p.onHalf = currentHalf;
   }
   clearTimeout(lineupAlertTimer);
   lineupAlertTimer = setTimeout(checkLineup, 10000);
@@ -1080,7 +1089,9 @@ function openFixLineup() {
       (function(i) {
         btn.addEventListener('click', function() {
           var pl = players[i];
-          pl.stints.push({ on: pl.onAt, off: curMin(), half: pl.onHalf });
+          if (running || getSeconds() > 0) {
+            pl.stints.push({ on: pl.onAt, off: curMin(), half: pl.onHalf });
+          }
           pl.onAt = null; pl.onHalf = null;
           vibe([40, 30, 40]);
           closeModal('fix-lineup-modal');
@@ -2535,7 +2546,15 @@ el('drawer-close-btn').addEventListener('click', closeDrawer);
 el('drawer-overlay').addEventListener('click', closeDrawer);
 el('start-btn').addEventListener('click', startTimer);
 el('pause-btn').addEventListener('click', pauseTimer);
-el('end-btn').addEventListener('click', function() { openModal('end-modal'); });
+el('end-btn').addEventListener('click', function() {
+  var fullTimeSecs = halfMins * 2 * 60;
+  var isEarly = getSeconds() < fullTimeSecs - 30;
+  el('end-modal-title').textContent = isEarly ? 'End match early?' : 'End match?';
+  el('end-modal-body').textContent = isEarly
+    ? 'The match clock hasn\'t reached full time. This will stop the timer and lock in all current times. Are you sure?'
+    : 'This will stop the timer and lock in all current times. Any players still on pitch will have their time recorded. Are you sure?';
+  openModal('end-modal');
+});
 el('reset-btn').addEventListener('click', function() { openModal('reset-modal'); });
 el('confirm-end').addEventListener('click', endMatch);
 el('cancel-end').addEventListener('click', function() { closeModal('end-modal'); });
@@ -2645,6 +2664,9 @@ el('half-badge').textContent = halfLabel.toUpperCase();
   el(id).classList.toggle('active', i + 1 === currentHalf);
 });
 if (matchEnded) {
+  var fullTimeSecs = halfMins * 2 * 60;
+  var endedEarly = secondsAccrued < fullTimeSecs - 30;
+  el('ended-banner').textContent = endedEarly ? 'Match ended early' : 'Full time';
   el('ended-banner').className = 'ended-banner show';
   el('end-btn').disabled = true;
   el('end-btn').style.opacity = '0.4';
