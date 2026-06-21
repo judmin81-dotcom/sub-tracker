@@ -331,6 +331,17 @@ h1{font-size:17px;font-weight:600;color:#fff}
 
 /* Undo stint */
 .icon-btn.lit-undo{background:#E8F0FE;color:#185FA5}
+.icon-btn.lit-catalogue{background:#FBE9D0;color:#A6601A}
+.icon-btn.lit-remove-player{background:#FCE4E4;color:#C0392B}
+
+/* Catalogue picker modal */
+.catalogue-search{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;font-family:inherit;color:var(--text-input);background:var(--bg-input);margin-bottom:10px;-webkit-appearance:none;box-sizing:border-box}
+.catalogue-list{display:flex;flex-direction:column;gap:7px;max-height:320px;overflow-y:auto}
+.catalogue-row{display:flex;align-items:center;gap:10px;border:none;border-radius:10px;padding:10px 12px;background:var(--bg-icon);cursor:pointer;font-family:inherit;text-align:left;width:100%}
+.catalogue-row:active{opacity:0.7}
+.catalogue-num{width:30px;height:30px;border-radius:14px;background:var(--green-light);color:var(--green-text);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.catalogue-name{flex:1;font-size:14px;font-weight:600;color:var(--text-primary)}
+.catalogue-empty{text-align:center;color:var(--text-muted);padding:24px 10px;font-size:13px}
 
 /* Fix lineup modal */
 .fix-lineup-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;margin-top:10px}
@@ -468,13 +479,9 @@ h1{font-size:17px;font-weight:600;color:#fff}
     </div>
     <div class="drawer-row">
       <label>Squad size</label>
-      <select id="squad-size">
-        <option>5</option><option>6</option><option>7</option><option>8</option>
-        <option>9</option><option>10</option><option>11</option><option>12</option>
-        <option>13</option><option>14</option><option>15</option><option selected>16</option>
-        <option>17</option><option>18</option><option>19</option><option>20</option>
-      </select>
+      <input type="number" id="squad-size" value="16" min="1" style="width:64px">
     </div>
+    <button class="drawer-btn drawer-btn-purple" id="btn-add-from-catalogue" style="margin-top:8px">&#128193; Add player from Catalogue</button>
   </div>
 
   <!-- Appearance -->
@@ -568,6 +575,17 @@ h1{font-size:17px;font-weight:600;color:#fff}
     <p>This will clear all match data and stop the timer. Player names will be kept.</p>
     <button class="btn btn-red" id="confirm-reset">Yes, reset</button>
     <button class="btn btn-gray" id="cancel-reset">Cancel</button>
+  </div>
+</div>
+
+<!-- Player catalogue picker modal -->
+<div class="modal-bg" id="catalogue-modal">
+  <div class="modal">
+    <h2>&#128193; Add from Catalogue</h2>
+    <p style="margin-bottom:10px">Pick a stored player to add to this gamesheet.</p>
+    <input type="text" id="catalogue-search" class="catalogue-search" placeholder="Search players...">
+    <div class="catalogue-list" id="catalogue-list"></div>
+    <button class="btn btn-gray" id="cancel-catalogue" style="margin-top:12px">Cancel</button>
   </div>
 </div>
 
@@ -1342,6 +1360,30 @@ function renderPlayers() {
       btnUndoStint.textContent = '\u21BA';
       (function(idx) { btnUndoStint.addEventListener('click', function() { undoLastStint(idx); }); }(i));
       iconWrap.appendChild(btnUndoStint);
+    }
+
+    // Save to Player Catalogue
+    var btnCatalogue = document.createElement('button');
+    btnCatalogue.className = 'icon-btn lit-catalogue';
+    btnCatalogue.title = 'Save to Player Catalogue';
+    btnCatalogue.style.cssText = 'font-size:12px';
+    btnCatalogue.innerHTML = '&#128193;';
+    (function(idx) {
+      btnCatalogue.addEventListener('click', function() {
+        addToCatalogue(players[idx].name, players[idx].number);
+      });
+    }(i));
+    iconWrap.appendChild(btnCatalogue);
+
+    // Remove player from gamesheet — only before match has data, or always with confirmation
+    if (!matchEnded) {
+      var btnRemovePlayer = document.createElement('button');
+      btnRemovePlayer.className = 'icon-btn lit-remove-player';
+      btnRemovePlayer.title = 'Remove player from gamesheet';
+      btnRemovePlayer.style.cssText = 'font-size:13px;font-weight:700';
+      btnRemovePlayer.innerHTML = '&#x2715;';
+      (function(idx) { btnRemovePlayer.addEventListener('click', function() { removePlayerRow(idx); }); }(i));
+      iconWrap.appendChild(btnRemovePlayer);
     }
 
     // Top row
@@ -2119,6 +2161,10 @@ function closeFormation() {
 // ── Squad size ────────────────────────────────────────────────────────────────
 function updateSquadSize() {
   var newSize = parseInt(el('squad-size').value);
+  if (isNaN(newSize) || newSize < 1) {
+    el('squad-size').value = squadSize;
+    return;
+  }
   if (newSize === squadSize) return;
   if (newSize < squadSize) {
     var hasData = players.slice(newSize).some(function(p) {
@@ -2463,6 +2509,128 @@ function exportMatchCSV(id) {
 }
 
 // ── Saved lineup ──────────────────────────────────────────────────────────────
+// ── Player Catalogue ──────────────────────────────────────────────────────────
+// A persistent store of players (name + number) independent of the current
+// gamesheet/squad. Lets the coach quickly add a known player to any match.
+function getCatalogue() {
+  try {
+    var raw = localStorage.getItem('subtracker_catalogue');
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function setCatalogue(list) {
+  try { localStorage.setItem('subtracker_catalogue', JSON.stringify(list)); } catch(e) {}
+}
+
+// Adds a player to the catalogue. Skips if a player with the same name
+// (case-insensitive, trimmed) already exists — repeated numbers are fine.
+function addToCatalogue(name, number) {
+  var trimmed = (name || '').trim();
+  if (!trimmed) { alert('This player has no name set — add a name before saving to the catalogue.'); return; }
+  var catalogue = getCatalogue();
+  var exists = catalogue.some(function(p) { return p.name.trim().toLowerCase() === trimmed.toLowerCase(); });
+  if (exists) {
+    alert('"' + trimmed + '" is already in the catalogue.');
+    return;
+  }
+  catalogue.push({ name: trimmed, number: number });
+  setCatalogue(catalogue);
+  vibe(50);
+  alert('"' + trimmed + '" saved to the Player Catalogue.');
+}
+
+function removeFromCatalogue(name) {
+  var catalogue = getCatalogue();
+  catalogue = catalogue.filter(function(p) { return p.name !== name; });
+  setCatalogue(catalogue);
+}
+
+// ── Add player from catalogue to current gamesheet ───────────────────────────
+function openCataloguePicker() {
+  el('catalogue-search').value = '';
+  renderCatalogueList('');
+  openModal('catalogue-modal');
+  setTimeout(function() { el('catalogue-search').focus(); }, 250);
+}
+
+function renderCatalogueList(filterText) {
+  var catalogue = getCatalogue();
+  var existingNames = players.map(function(p) { return (p.name || '').trim().toLowerCase(); });
+  var filtered = catalogue.filter(function(p) {
+    return p.name.toLowerCase().indexOf(filterText.toLowerCase()) !== -1;
+  });
+  // Sort alphabetically for easy scanning
+  filtered.sort(function(a, b) { return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1; });
+
+  var list = el('catalogue-list');
+  list.innerHTML = '';
+
+  if (catalogue.length === 0) {
+    list.innerHTML = '<div class="catalogue-empty">Your catalogue is empty.<br>Save players from the gamesheet first using the &#128193; icon on each player card.</div>';
+    return;
+  }
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="catalogue-empty">No matches found.</div>';
+    return;
+  }
+
+  filtered.forEach(function(cp) {
+    var alreadyOnSheet = existingNames.indexOf(cp.name.trim().toLowerCase()) !== -1;
+    var btn = document.createElement('button');
+    btn.className = 'catalogue-row';
+    if (alreadyOnSheet) btn.style.opacity = '0.45';
+    var numSpan = document.createElement('div');
+    numSpan.className = 'catalogue-num';
+    numSpan.textContent = cp.number;
+    var nameSpan = document.createElement('span');
+    nameSpan.className = 'catalogue-name';
+    nameSpan.textContent = cp.name;
+    btn.appendChild(numSpan);
+    btn.appendChild(nameSpan);
+    if (alreadyOnSheet) {
+      var tag = document.createElement('span');
+      tag.style.cssText = 'font-size:10px;color:var(--text-muted);font-weight:600';
+      tag.textContent = 'on gamesheet';
+      btn.appendChild(tag);
+    } else {
+      btn.addEventListener('click', function() { addPlayerFromCatalogue(cp); });
+    }
+    list.appendChild(btn);
+  });
+}
+
+function addPlayerFromCatalogue(catalogueEntry) {
+  var newPlayer = makePlayer(squadSize, catalogueEntry.name, catalogueEntry.number);
+  players.push(newPlayer);
+  squadSize = players.length;
+  el('squad-size').value = squadSize;
+  closeModal('catalogue-modal');
+  vibe(50);
+  saveState();
+  renderPlayers();
+}
+
+// ── Remove a single player row from the gamesheet ─────────────────────────────
+function removePlayerRow(idx) {
+  if (players.length <= 5) {
+    alert('Squad cannot go below 5 players.');
+    return;
+  }
+  var p = players[idx];
+  var name = p.name || 'Player ' + p.number;
+  var hasData = p.stints.length > 0 || p.onAt !== null || p.cards.length > 0 || p.injured;
+  var msg = hasData
+    ? 'Remove ' + name + ' from this gamesheet? They have match data recorded that will be lost.'
+    : 'Remove ' + name + ' from this gamesheet?';
+  if (!confirm(msg)) return;
+  players.splice(idx, 1);
+  squadSize = players.length;
+  el('squad-size').value = Math.max(5, squadSize);
+  saveState();
+  renderPlayers();
+}
+
 function saveLineup() {
   try {
     var lineup = players.map(function(p) {
@@ -2589,6 +2757,9 @@ el('detail-back').addEventListener('click', function() {
 });
 el('btn-save-lineup').addEventListener('click', function() { saveLineup(); closeDrawer(); });
 el('btn-load-lineup').addEventListener('click', function() { loadLineup(); closeDrawer(); });
+el('btn-add-from-catalogue').addEventListener('click', function() { closeDrawer(); openCataloguePicker(); });
+el('cancel-catalogue').addEventListener('click', function() { closeModal('catalogue-modal'); });
+el('catalogue-search').addEventListener('input', function() { renderCatalogueList(this.value); });
 el('btn-clear-lineup').addEventListener('click', clearLineup);
 el('btn-formation').addEventListener('click', openFormation);
 el('pitch-close').addEventListener('click', closeFormation);
